@@ -1,0 +1,11 @@
+{
+    "*.ts": [
+        "eslint --fix --format stylish"
+    ],
+    "*": [
+        "prettier --write"
+    ],
+    "*.md": [
+        "markdownlint -i node_modules ."
+    ]
+}

@@ -1,0 +1,74 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Chrome against localhost",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080/de-DE",
+            "webRoot": "${workspaceFolder}",
+            "skipFiles": ["${workspaceFolder}/node_modules/**/*.*"]
+        },
+        {
+            "name": "Launch Brave against localhost",
+            "type": "chrome",
+            "runtimeExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+            "request": "launch",
+            "url": "http://localhost:8080/de-DE",
+            "webRoot": "${workspaceFolder}",
+            "skipFiles": ["${workspaceFolder}/node_modules/**/*.*"]
+        },
+        {
+            "name": "Launch Firefox against localhost",
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:8080/de-DE",
+            "webRoot": "${workspaceFolder}",
+            "skipFiles": ["${workspaceFolder}/node_modules/**/*.*"]
+        },
+        {
+            "name": "Attach to Karma",
+            "type": "chrome",
+            "request": "attach",
+            "address": "localhost",
+            "restart": true,
+            "port": 9222,
+            "timeout": 600000,
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}",
+            "pathMapping": {
+                "/_karma_webpack_": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Run tests for current file",
+            "type": "node",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}/node_modules/.bin/ng",
+            "args": ["test", "--include", "${relativeFile}"],
+            "outFiles": ["${workspaceFolder}/**/*.js"]
+        },
+        {
+            "name": "Run tests for current file with coverage",
+            "type": "node",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}/node_modules/.bin/ng",
+            "args": ["test", "--code-coverage", "--include", "${relativeFile}"],
+            "outFiles": ["${workspaceFolder}/**/*.js"]
+        },
+        {
+            "name": "Run all tests with coverage",
+            "type": "node",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}/node_modules/.bin/ng",
+            "args": ["test", "--code-coverage"],
+            "outFiles": ["${workspaceFolder}/**/*.js"]
+        }
+    ]
+}

@@ -1,8 +1,15 @@
 {
-  "recommendations": [
-    "nrwl.angular-console",
-    "esbenp.prettier-vscode",
-    "firsttris.vscode-jest-runner",
-    "dbaeumer.vscode-eslint"
-  ]
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+    "recommendations": [
+        "johnpapa.Angular2",
+        "Angular.ng-template",
+        "cyrilletuzi.angular-schematics",
+        "ryanluker.vscode-coverage-gutters",
+        "esbenp.prettier-vscode",
+        "DavidAnson.vscode-markdownlint",
+        "bradlc.vscode-tailwindcss",
+        "EditorConfig.EditorConfig",
+        "eamodio.gitlens",
+        "firefox-devtools.vscode-firefox-debug"
+    ]
 }
