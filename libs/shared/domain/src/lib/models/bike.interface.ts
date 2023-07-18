@@ -2,6 +2,6 @@ export interface Bike {
   id: string;
   manufacturer: string;
   model: string;
-  date: Date;
+  date: string;
   archived: boolean;
 }

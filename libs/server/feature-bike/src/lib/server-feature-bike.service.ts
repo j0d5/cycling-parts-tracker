@@ -7,7 +7,7 @@ const testData: Bike[] = [
     id: '1',
     manufacturer: 'Propain',
     model: 'Tyee',
-    date: new Date('17.07.2023'),
+    date: '17.07.2023',
     archived: false,
   },
 ];
@@ -26,5 +26,19 @@ export class ServerFeatureBikeService {
       throw new NotFoundException(`Bike could not be found!`);
     }
     return bikes;
+  }
+
+  create(bike: Pick<Bike, 'manufacturer' | 'model' | 'date'>): Bike {
+    const current = this.bikes$.value;
+
+    const newBike: Bike = {
+      ...bike,
+      id: `bike-${Math.floor(Math.random() * 10000)}`,
+      archived: false,
+    };
+
+    this.bikes$.next([...current, newBike]);
+
+    return newBike;
   }
 }
