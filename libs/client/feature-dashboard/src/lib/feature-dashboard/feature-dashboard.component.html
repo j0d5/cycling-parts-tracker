@@ -1,15 +1,27 @@
-<div class="bike-list">
-  <div class="bike" *ngFor="let bike of bikeItems$ | async; let i = index">
-    <h2 class="bike__manufacturer">
-      #{{ i + 1 }} {{ bike.manufacturer }} {{ bike.model }}
-    </h2>
-    <small class="bike__id">ID: {{ bike.id }}</small>
-    <br />
-    <small class="bike__archived-label"
-      >Archived:
-      <span class="bike__archived-value--{{ bike.archived }}">{{
-        bike.archived
-      }}</span></small
-    >
+<div class="page" *ngIf="bikeItems$ | async as bikeItems">
+  <div class="incomplete-column">
+    <h1>Incomplete</h1>
+    <ng-container *ngFor="let bike of bikeItems">
+      <cpt-bike [bike]="bike" *ngIf="!bike.archived"></cpt-bike>
+    </ng-container>
+  </div>
+
+  <div class="complete-column">
+    <h1>Completed</h1>
+    <ng-container *ngFor="let bike of bikeItems">
+      <cpt-bike [bike]="bike" *ngIf="bike.archived"></cpt-bike>
+    </ng-container>
+  </div>
+
+  <div class="archived-column">
+    <h1>Completed</h1>
+    <ng-container *ngFor="let bike of bikeItems; trackBy: trackBike">
+      <cpt-bike
+        [bike]="bike"
+        *ngIf="bike.archived"
+        (toggleComplete)="toggleComplete($event)"
+        (deleteTodo)="deleteTodo($event)"
+      ></cpt-bike>
+    </ng-container>
   </div>
 </div>
