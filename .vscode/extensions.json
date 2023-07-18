@@ -10,6 +10,7 @@
     "EditorConfig.EditorConfig",
     "eamodio.gitlens",
     "firefox-devtools.vscode-firefox-debug",
-    "firsttris.vscode-jest-runner"
+    "firsttris.vscode-jest-runner",
+    "stylelint.vscode-stylelint"
   ]
 }

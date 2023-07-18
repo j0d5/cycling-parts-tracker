@@ -23,7 +23,10 @@
         "libs/server/data-access-bike/src/index.ts"
       ],
       "@cpt/server/feature-bike": ["libs/server/feature-bike/src/index.ts"],
-      "@cpt/shared/domain": ["libs/shared/domain/src/index.ts"]
+      "@cpt/shared/domain": ["libs/shared/domain/src/index.ts"],
+      "@cycling-parts-tracker/client/ui-style": [
+        "libs/client/ui-style/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
