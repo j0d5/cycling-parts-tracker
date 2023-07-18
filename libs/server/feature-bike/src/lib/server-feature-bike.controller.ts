@@ -14,8 +14,8 @@ export class ServerFeatureBikeController {
     isArray: true,
   })
   @ApiOperation({
-    summary: 'Returns all to-do items',
-    tags: ['todos'],
+    summary: 'Returns all bike items',
+    tags: ['bikes'],
   })
   getAll(): Promise<Bike[]> {
     return this.serverFeatureBikeService.getAll();
