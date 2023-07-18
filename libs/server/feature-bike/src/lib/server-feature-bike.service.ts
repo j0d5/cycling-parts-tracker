@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 
 const testData: Bike[] = [
   {
-    id: '1',
+    id: '0',
     manufacturer: 'Propain',
     model: 'Tyee',
     date: '17.07.2023',

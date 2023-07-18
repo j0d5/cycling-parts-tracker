@@ -1,1 +1,6 @@
 <p>feature-dashboard works!</p>
+<ul>
+  <li *ngFor="let bike of bikeItems$ | async; let i = index">
+    {{ i }}. {{ bike.manufacturer }}
+  </li>
+</ul>

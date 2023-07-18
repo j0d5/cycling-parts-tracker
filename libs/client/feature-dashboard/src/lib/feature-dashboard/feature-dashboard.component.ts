@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { ApiService } from '@cpt/client/data-access';
 
 @Component({
   selector: 'cycling-parts-tracker-feature-dashboard',
@@ -8,4 +9,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './feature-dashboard.component.html',
   styleUrls: ['./feature-dashboard.component.scss'],
 })
-export class FeatureDashboardComponent {}
+export class FeatureDashboardComponent {
+  private readonly apiService = inject(ApiService);
+
+  bikeItems$ = this.apiService.getAllBikeItems();
+}

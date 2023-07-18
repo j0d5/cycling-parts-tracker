@@ -3,7 +3,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateBikeDto } from './dtos/bike.dto';
 import { ServerFeatureBikeService } from './server-feature-bike.service';
 
-@Controller('server-feature-bike')
+@Controller({ path: 'bikes' })
 export class ServerFeatureBikeController {
   constructor(private serverFeatureBikeService: ServerFeatureBikeService) {}
 
