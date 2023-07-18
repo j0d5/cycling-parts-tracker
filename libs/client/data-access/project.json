@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/client/data-access/src",
   "prefix": "cycling-parts-tracker",
-  "tags": ["type:service", "scope:client"],
+  "tags": ["type:data-access", "scope:client"],
   "projectType": "library",
   "targets": {
     "test": {

@@ -1,44 +1,32 @@
+import { BikeEntitySchema } from '@cpt/server/data-access-bike';
 import { Bike } from '@cpt/shared/domain';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BehaviorSubject } from 'rxjs';
-
-const testData: Bike[] = [
-  {
-    id: '0',
-    manufacturer: 'Propain',
-    model: 'Tyee',
-    date: '17.07.2023',
-    archived: false,
-  },
-];
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ServerFeatureBikeService {
-  private bikes$ = new BehaviorSubject<Bike[]>(testData);
+  constructor(
+    @InjectRepository(BikeEntitySchema)
+    private bikeRepository: Repository<Bike>
+  ) {}
 
-  getAll(): Bike[] {
-    return this.bikes$.value;
+  async getAll(): Promise<Bike[]> {
+    return await this.bikeRepository.find();
   }
 
-  getOne(id: string): Bike {
-    const bikes = this.bikes$.value.find((td) => td.id === id);
+  async getOne(id: string): Promise<Bike> {
+    const bikes = await this.bikeRepository.findOneBy({ id });
+
     if (!bikes) {
       throw new NotFoundException(`Bike could not be found!`);
     }
     return bikes;
   }
 
-  create(bike: Pick<Bike, 'manufacturer' | 'model' | 'date'>): Bike {
-    const current = this.bikes$.value;
-
-    const newBike: Bike = {
-      ...bike,
-      id: `bike-${Math.floor(Math.random() * 10000)}`,
-      archived: false,
-    };
-
-    this.bikes$.next([...current, newBike]);
-
-    return newBike;
+  async create(
+    bike: Pick<Bike, 'manufacturer' | 'model' | 'date'>
+  ): Promise<Bike> {
+    return await this.bikeRepository.save({ ...bike });
   }
 }
