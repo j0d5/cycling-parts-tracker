@@ -1,6 +1,15 @@
-<p>feature-dashboard works!</p>
-<ul>
-  <li *ngFor="let bike of bikeItems$ | async; let i = index">
-    {{ i }}. {{ bike.manufacturer }}
-  </li>
-</ul>
+<div class="bike-list">
+  <div class="bike" *ngFor="let bike of bikeItems$ | async; let i = index">
+    <h2 class="bike__manufacturer">
+      #{{ i + 1 }} {{ bike.manufacturer }} {{ bike.model }}
+    </h2>
+    <small class="bike__id">ID: {{ bike.id }}</small>
+    <br />
+    <small class="bike__archived-label"
+      >Archived:
+      <span class="bike__archived-value--{{ bike.archived }}">{{
+        bike.archived
+      }}</span></small
+    >
+  </div>
+</div>
