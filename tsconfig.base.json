@@ -19,6 +19,7 @@
       "@cpt/client/feature-dashboard": [
         "libs/client/feature-dashboard/src/index.ts"
       ],
+      "@cpt/client/ui-components": ["libs/client/ui-components/src/index.ts"],
       "@cpt/server/data-access-bike": [
         "libs/server/data-access-bike/src/index.ts"
       ],

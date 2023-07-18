@@ -1,0 +1,35 @@
+<div class="bike" *ngIf="bike">
+  <div class="bike__header">
+    <button
+      class="btn btn--sm bike__archived"
+      [class.bike__archived--true]="bike.archived"
+      (click)="triggerToggleComplete()"
+    >
+      <fa-stack>
+        <fa-icon [icon]="faCircleOutline" stackItemSize="2x"></fa-icon>
+        <fa-icon
+          [icon]="faCheck"
+          stackItemSize="1x"
+          *ngIf="bike.archived"
+        ></fa-icon>
+      </fa-stack>
+    </button>
+    <h2 class="bike__title">{{ bike.manufacturer }}</h2>
+  </div>
+
+  <div class="bike__body">
+    <p class="bike__model">{{ bike.model }}</p>
+  </div>
+
+  <div class="bike__footer">
+    <div class="bike__actions">
+      <button class="btn btn--danger" (click)="triggerDelete()">
+        <fa-icon [icon]="faTrashCan"></fa-icon>
+      </button>
+
+      <button class="btn btn--primary" (click)="triggerEdit()">
+        <fa-icon [icon]="faPencil"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>
