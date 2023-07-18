@@ -1,6 +1,6 @@
 import { Bike, UpdateBike, UpsertBike } from '@cpt/shared/domain';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 /**
  * This DTO was added so that a class can be used as a return type in the
@@ -148,7 +148,7 @@ export class UpdateBikeDto implements UpdateBike {
     readOnly: true,
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   manufacturer!: string;
 
   @ApiProperty({
@@ -157,7 +157,7 @@ export class UpdateBikeDto implements UpdateBike {
     readOnly: true,
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   model!: string;
 
   @ApiProperty({
@@ -166,7 +166,7 @@ export class UpdateBikeDto implements UpdateBike {
     readOnly: true,
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   date!: string;
 
   @ApiProperty({
@@ -175,6 +175,6 @@ export class UpdateBikeDto implements UpdateBike {
     default: false,
   })
   @IsBoolean()
-  @IsNotEmpty()
+  @IsOptional()
   archived!: boolean;
 }

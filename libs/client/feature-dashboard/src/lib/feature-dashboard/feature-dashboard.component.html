@@ -1,27 +1,29 @@
-<div class="page" *ngIf="bikeItems$ | async as bikeItems">
-  <div class="incomplete-column">
-    <h1>Incomplete</h1>
-    <ng-container *ngFor="let bike of bikeItems">
-      <cpt-bike [bike]="bike" *ngIf="!bike.archived"></cpt-bike>
-    </ng-container>
-  </div>
+<div class="content-container">
+  <div class="content-area">
+    <div class="page" *ngIf="bikeItems$ | async as bikeItems">
+      <div class="incomplete-column">
+        <h1>Current</h1>
+        <ng-container *ngFor="let bike of bikeItems">
+          <cpt-bike
+            [bike]="bike"
+            *ngIf="!bike.archived"
+            (toggleComplete)="toggleComplete($event)"
+            (deleteBike)="deleteBike($event)"
+          ></cpt-bike>
+        </ng-container>
+      </div>
 
-  <div class="complete-column">
-    <h1>Completed</h1>
-    <ng-container *ngFor="let bike of bikeItems">
-      <cpt-bike [bike]="bike" *ngIf="bike.archived"></cpt-bike>
-    </ng-container>
-  </div>
-
-  <div class="archived-column">
-    <h1>Completed</h1>
-    <ng-container *ngFor="let bike of bikeItems; trackBy: trackBike">
-      <cpt-bike
-        [bike]="bike"
-        *ngIf="bike.archived"
-        (toggleComplete)="toggleComplete($event)"
-        (deleteTodo)="deleteTodo($event)"
-      ></cpt-bike>
-    </ng-container>
+      <div class="archived-column">
+        <h1>Archived</h1>
+        <ng-container *ngFor="let bike of bikeItems; trackBy: trackBike">
+          <cpt-bike
+            [bike]="bike"
+            *ngIf="bike.archived"
+            (toggleComplete)="toggleComplete($event)"
+            (deleteBike)="deleteBike($event)"
+          ></cpt-bike>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

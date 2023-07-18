@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Bike } from '@cpt/shared/domain';
+import { Bike, CreateBike, UpdateBike, UpsertBike } from '@cpt/shared/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,15 +17,15 @@ export class ApiService {
     return this.http.get<Bike>(`api/bikes/${bikeId}`);
   }
 
-  createBike(bikeData: Bike): Observable<Bike> {
+  createBike(bikeData: CreateBike): Observable<Bike> {
     return this.http.post<Bike>(`/api/bikes`, bikeData);
   }
 
-  updateBike(bikeId: string, bikeData: Bike): Observable<Bike> {
-    return this.http.patch<Bike>(`/api/bikes${bikeId}`, bikeData);
+  updateBike(bikeId: string, bikeData: UpdateBike): Observable<Bike> {
+    return this.http.patch<Bike>(`/api/bikes/${bikeId}`, bikeData);
   }
 
-  createOrUpdateBike(bikeId: string, bikeData: Bike): Observable<Bike> {
+  createOrUpdateBike(bikeId: string, bikeData: UpsertBike): Observable<Bike> {
     return this.http.put<Bike>(`/api/bikes/${bikeId}`, bikeData);
   }
 

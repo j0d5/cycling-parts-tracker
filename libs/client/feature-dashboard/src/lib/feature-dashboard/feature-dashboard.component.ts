@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from '@cpt/client/data-access';
 import { BikeComponent } from '@cpt/client/ui-components';
 import { Bike } from '@cpt/shared/domain';
-import { take } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 
 @Component({
   selector: 'cycling-parts-tracker-feature-dashboard',
@@ -15,9 +15,9 @@ import { take } from 'rxjs';
 export class FeatureDashboardComponent implements OnInit {
   private readonly apiService = inject(ApiService);
 
-  bikeItems$ = this.apiService.getAllBikeItems();
+  bikeItems$ = new BehaviorSubject<Bike[]>([]);
 
-  trackTodo(idx: number, todo: Bike) {
+  trackBike(idx: number, todo: Bike) {
     return todo.id;
   }
 
@@ -32,16 +32,17 @@ export class FeatureDashboardComponent implements OnInit {
       .subscribe((items) => this.bikeItems$.next(items));
   }
 
-  toggleComplete(todo: Bike) {
+  toggleComplete(bike: Bike) {
     this.apiService
-      .updateBike(todo.id, { archived: !todo.archived })
+      .updateBike(bike.id, { archived: !bike.archived })
       .pipe(take(1))
       .subscribe(() => {
         this.refreshItems();
       });
   }
 
-  deleteTodo({ id }: Bike) {
+  deleteBike({ id }: Bike) {
+    console.log('Delete bike:', id);
     this.apiService
       .deleteBike(id)
       .pipe(take(1))
