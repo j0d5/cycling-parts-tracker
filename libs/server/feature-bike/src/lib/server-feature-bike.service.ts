@@ -5,8 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 const testData: Bike[] = [
   {
     id: '1',
-    title: 'Propain',
-    description: 'Tyee',
+    manufacturer: 'Propain',
+    model: 'Tyee',
     date: new Date('17.07.2023'),
     archived: false,
   },
