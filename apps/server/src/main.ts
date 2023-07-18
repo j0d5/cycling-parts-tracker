@@ -23,6 +23,11 @@ async function bootstrap() {
     prefix: 'v1',
   });
 
+  // TODO - revisit and secure this!
+  app.enableCors({
+    origin: '*',
+  });
+
   // handle swagger
   const config = new DocumentBuilder()
     .setTitle(`Full Stack CPT REST API`)

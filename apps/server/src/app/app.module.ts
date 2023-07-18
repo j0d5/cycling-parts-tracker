@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { ServerFeatureBikeModule } from '@cpt/server/feature-bike';
+import { ServerFeatureHealthModule } from '@cpt/server/feature-health';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import joi from 'joi';
@@ -26,6 +27,7 @@ import { AppService } from './app.service';
       inject: [ConfigService],
     }),
     ServerFeatureBikeModule,
+    ServerFeatureHealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
