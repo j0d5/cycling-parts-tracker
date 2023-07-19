@@ -20,16 +20,14 @@
         "libs/client/feature-dashboard/src/index.ts"
       ],
       "@cpt/client/ui-components": ["libs/client/ui-components/src/index.ts"],
+      "@cpt/client/ui-style": ["libs/client/ui-style/src/index.ts"],
       "@cpt/server/data-access-bike": [
         "libs/server/data-access-bike/src/index.ts"
       ],
       "@cpt/server/feature-bike": ["libs/server/feature-bike/src/index.ts"],
       "@cpt/server/feature-health": ["libs/server/feature-health/src/index.ts"],
       "@cpt/shared/domain": ["libs/shared/domain/src/index.ts"],
-      "@cpt/shared/util-env": ["libs/shared/util-env/src/index.ts"],
-      "@cycling-parts-tracker/client/ui-style": [
-        "libs/client/ui-style/src/index.ts"
-      ]
+      "@cpt/shared/util-env": ["libs/shared/util-env/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
