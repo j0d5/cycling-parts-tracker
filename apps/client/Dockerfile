@@ -9,10 +9,14 @@ FROM docker.io/node:lts-alpine
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
+RUN apk add g++ make py3-pip
+
 WORKDIR /app
 
 RUN addgroup --system client && \
-          adduser --system -G client client
+  adduser --system -G client client
+
+COPY package.json client/package.json
 
 COPY dist/apps/client client
 RUN chown -R client:client .

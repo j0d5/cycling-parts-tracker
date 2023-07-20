@@ -1,50 +1,56 @@
 {
-    "editor.rulers": [120],
+  "editor.rulers": [120],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.markdownlint": true
+  },
+  "editor.tabSize": 4,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "git.inputValidationLength": 100,
+  "git.inputValidationSubjectLength": 100,
+
+  "files.trimTrailingWhitespace": false, // more specifically defined by .editorconfig / .prettierrc / .prettierignore
+  "files.insertFinalNewline": false, // more specifically defined by .editorconfig / .prettierrc / .prettierignore
+  "files.exclude": {
+    "node_modules": true,
+    ".angular": true
+  },
+
+  "eslint.validate": ["javascript", "html", "json"],
+
+  "[markdown]": {
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "source.fixAll.markdownlint": true
-    },
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
-    "git.inputValidationLength": 100,
-    "git.inputValidationSubjectLength": 100,
+  "coverage-gutters.showGutterCoverage": true,
+  "coverage-gutters.showLineCoverage": true,
 
-    "files.trimTrailingWhitespace": false, // more specifically defined by .editorconfig / .prettierrc / .prettierignore
-    "files.insertFinalNewline": false, // more specifically defined by .editorconfig / .prettierrc / .prettierignore
-    "files.exclude": {
-        "node_modules": true,
-        ".angular": true
-    },
-
-    "eslint.validate": ["javascript", "html", "json"],
-
-    "[markdown]": {
-        "editor.formatOnSave": true,
-        "editor.formatOnPaste": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "coverage-gutters.showGutterCoverage": true,
-    "coverage-gutters.showLineCoverage": true,
-
-    /*
-     * Any variable or getter function containing 'class', 'Class' or 'CLASS' will be matched to be recognized
-     * by Tailwind IntelliSense
-     * e.g.  @HostBinding('class') hostClass = 'flex';
-     * e.g.  const typeClasses = { primary: 'flex', secondary: 'block' }
-     * e.g.  @HostBinding('class') get hostClasses(): string { return this.input === OPTION_A ? 'w-full' : 'h-full w-min'; }
-     */
-    "tailwindCSS.experimental.classRegex": [
-        ["(?:class|Class|CLASS).* \\=([^;]*);", "'([^']*)'"],
-        ["(?:class|Class|CLASS).* \\=([^;]*);", "\"([^\"]*)\""],
-        ["(?:class|Class|CLASS).* \\=([^;]*);", "\\`([^\\`]*)\\`"],
-        ["get .*(?:class|Class|CLASS).*\\(\\).*\\{([\\S\\s]*)\\}", "'([^']*)'"],
-        ["get .*(?:class|Class|CLASS).*\\(\\).*\\{([\\S\\s]*)\\}", "\"([^\"]*)\""],
-        ["get .*(?:class|Class|CLASS).*\\(\\).*\\{([\\S\\s]*)\\}", "\\`([^\\`]*)\\`"]
-    ],
-    "tailwindCSS.includeLanguages": {
-        "typescript": "javascript"
-    }
+  /*
+   * Any variable or getter function containing 'class', 'Class' or 'CLASS' will be matched to be recognized
+   * by Tailwind IntelliSense
+   * e.g.  @HostBinding('class') hostClass = 'flex';
+   * e.g.  const typeClasses = { primary: 'flex', secondary: 'block' }
+   * e.g.  @HostBinding('class') get hostClasses(): string { return this.input === OPTION_A ? 'w-full' : 'h-full w-min'; }
+   */
+  "tailwindCSS.experimental.classRegex": [
+    ["(?:class|Class|CLASS).* \\=([^;]*);", "'([^']*)'"],
+    ["(?:class|Class|CLASS).* \\=([^;]*);", "\"([^\"]*)\""],
+    ["(?:class|Class|CLASS).* \\=([^;]*);", "\\`([^\\`]*)\\`"],
+    ["get .*(?:class|Class|CLASS).*\\(\\).*\\{([\\S\\s]*)\\}", "'([^']*)'"],
+    ["get .*(?:class|Class|CLASS).*\\(\\).*\\{([\\S\\s]*)\\}", "\"([^\"]*)\""],
+    [
+      "get .*(?:class|Class|CLASS).*\\(\\).*\\{([\\S\\s]*)\\}",
+      "\\`([^\\`]*)\\`"
+    ]
+  ],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript"
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  }
 }
