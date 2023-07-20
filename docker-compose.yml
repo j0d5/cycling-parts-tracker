@@ -41,3 +41,32 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=${DATABASE_USERNAME}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'mysqladmin',
+          'ping',
+          '-h',
+          'localhost',
+          '--password=$DATABASE_PASSWORD',
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
