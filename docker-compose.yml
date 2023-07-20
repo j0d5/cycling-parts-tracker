@@ -1,0 +1,43 @@
+version: '3.8'
+
+# explicit names make it easier to reference containers
+services:
+  client:
+    container_name: client
+    image: client
+    ports:
+      - 8080:80
+
+    # ensures an API is available
+    depends_on:
+      - server
+
+    # nginx's default image is based on debian, so we can use
+    # 'service' to check the health of the process instead of
+    # curl/wget against localhost
+    healthcheck:
+      test: service nginx status || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  server:
+    container_name: server
+    image: server
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+
+    # override the ENVIRONMENT variable set in the file
+    environment:
+      - ENVIRONMENT=docker
+
+    # node's alpine image doesn't bundle curl by default, so
+    # we use wget to query a basic GET endpoint
+    healthcheck:
+      test: wget localhost:3000/api/v1/todos -q -O - > /dev/null 2>&1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
