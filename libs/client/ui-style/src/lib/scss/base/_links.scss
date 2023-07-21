@@ -3,6 +3,7 @@ a {
   text-decoration: underline;
 
   &:hover {
+    // stylelint-disable scss/no-global-function-names
     color: darken($color: $nord7, $amount: 10%);
   }
 

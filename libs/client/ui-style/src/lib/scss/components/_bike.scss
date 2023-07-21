@@ -13,29 +13,29 @@ $bike-border-radius: 8px;
   row-gap: 0.5rem;
 }
 
-.bike__header {
+.bike-header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
-  .bike__title {
+  .bike-title {
     margin-block-end: 0;
   }
 }
 
-.bike__body {
+.bike-body {
   p {
     margin: 0;
   }
 }
 
-.bike__footer {
+.bike-footer {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
 }
 
-.bike__archived {
+.bike-archived {
   padding: $space-x-sm 0;
   display: flex;
   flex-direction: column;
@@ -55,13 +55,13 @@ $bike-border-radius: 8px;
   }
 }
 
-.bike__actions {
+.bike-actions {
   > * + * {
     margin-inline-start: $space-sm;
   }
 }
 
-.bike__id {
+.bike-id {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;

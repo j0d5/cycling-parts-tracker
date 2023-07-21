@@ -1,8 +1,8 @@
 <div class="bike" *ngIf="bike">
-  <div class="bike__header">
+  <div class="bike-header">
     <button
-      class="btn btn--sm bike__archived"
-      [class.bike__archived--true]="bike.archived"
+      class="btn btn--sm bike-archived"
+      [class.bike-archived--true]="bike.archived"
       (click)="triggerToggleComplete()"
     >
       <fa-stack>
@@ -14,15 +14,15 @@
         ></fa-icon>
       </fa-stack>
     </button>
-    <h2 class="bike__title">{{ bike.manufacturer }}</h2>
+    <h2 class="bike-title">{{ bike.manufacturer }}</h2>
   </div>
 
-  <div class="bike__body">
-    <p class="bike__model">{{ bike.model }}</p>
+  <div class="bike-body">
+    <p class="bike-model">{{ bike.model }}</p>
   </div>
 
-  <div class="bike__footer">
-    <div class="bike__actions">
+  <div class="bike-footer">
+    <div class="bike-actions">
       <button class="btn btn--danger" (click)="triggerDelete()">
         <fa-icon [icon]="faTrashCan"></fa-icon>
       </button>

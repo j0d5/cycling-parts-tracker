@@ -3,6 +3,7 @@
   border: 1px solid $base-color;
 
   &:hover {
+    // stylelint-disable scss/no-global-function-names
     background-color: darken($color: $base-color, $amount: 10%);
     cursor: pointer;
   }
