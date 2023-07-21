@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 # explicit names make it easier to reference containers
 services:
@@ -32,19 +32,34 @@ services:
     # override the ENVIRONMENT variable set in the file
     environment:
       - ENVIRONMENT=docker
+      - DATABASE_HOST=mariadb # this has to match the name of the database service being used!
 
     # node's alpine image doesn't bundle curl by default, so
     # we use wget to query a basic GET endpoint
     healthcheck:
-      test: wget localhost:3000/api/v1/todos -q -O - > /dev/null 2>&1
+      test: wget localhost:3000/api/health -q -O - > /dev/null 2>&1
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 30s
-
     depends_on:
       mariadb:
-        condition: service_healthy
+        condition: service_started
+
+  # swagger-ui:
+  #   container_name: swagger
+  #   image: 'swaggerapi/swagger-ui:v3.25.0'
+  #   ports:
+  #     - '8081:8080'
+  #   volumes:
+  #     - ./${SWAGGER_JSON_FILE}:/usr/share/spec/${SWAGGER_JSON_FILE}
+  #   environment:
+  #     SWAGGER_JSON: /usr/share/spec/${SWAGGER_JSON_FILE}
+  #   healthcheck:
+  #     test: ['CMD', 'wget', 'localhost:8081 -q -O - > /dev/null 2>&1']
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
 
   mariadb:
     container_name: mariadb
@@ -52,10 +67,13 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_USER=${DATABASE_USERNAME}
-      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
-      - MYSQL_DATABASE=${DATABASE_NAME}
-      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_USER=${DATABASE_USERNAME?REQUIRED}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD?REQUIRED}
+      - MYSQL_DATABASE=${DATABASE_NAME?REQUIRED}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD?REQUIRED}
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
+    restart: on-failure
     healthcheck:
       test:
         [
