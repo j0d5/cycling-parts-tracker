@@ -1,5 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 
+import { ServerFeatureAuthModule } from '@cpt/server/feature-auth';
 import { ServerFeatureBikeModule } from '@cpt/server/feature-bike';
 import { ServerFeatureHealthModule } from '@cpt/server/feature-health';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -37,6 +38,17 @@ import joi from 'joi';
     }),
     ServerFeatureBikeModule,
     ServerFeatureHealthModule,
+    ServerFeatureAuthModule,
   ],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: JwtAuthGuard,
+  //   },
+  //   {
+  //     provide: APP_FILTER,
+  //     useClass: DatabaseExceptionFilter,
+  //   },
+  // ],
 })
 export class AppModule {}

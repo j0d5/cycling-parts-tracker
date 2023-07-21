@@ -1,4 +1,4 @@
-import { BikeEntitySchema } from '@cpt/server/data-access-bike';
+import { BikeEntitySchema } from '@cpt/server/data-access';
 import { Bike } from '@cpt/shared/domain';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';

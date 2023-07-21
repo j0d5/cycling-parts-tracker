@@ -1,4 +1,4 @@
-import { BikeEntitySchema } from '@cpt/server/data-access-bike';
+import { BikeEntitySchema } from '@cpt/server/data-access';
 import {
   ServerFeatureBikeController,
   ServerFeatureBikeService,

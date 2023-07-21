@@ -1,4 +1,4 @@
-import { BikeEntitySchema } from '@cpt/server/data-access-bike';
+import { BikeEntitySchema } from '@cpt/server/data-access';
 import { createMockBike } from '@cpt/shared/util-testing';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';

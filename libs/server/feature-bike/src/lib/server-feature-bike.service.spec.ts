@@ -1,4 +1,4 @@
-import { BikeEntitySchema } from '@cpt/server/data-access-bike';
+import { BikeEntitySchema } from '@cpt/server/data-access';
 import { Bike, CreateBike } from '@cpt/shared/domain';
 import { createMockBike } from '@cpt/shared/util-testing';
 import { NotFoundException } from '@nestjs/common';

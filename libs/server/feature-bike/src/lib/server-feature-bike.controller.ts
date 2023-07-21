@@ -1,3 +1,9 @@
+import {
+  BikeDto,
+  CreateBikeDto,
+  UpdateBikeDto,
+  UpsertBikeDto,
+} from '@cpt/server/data-access';
 import { Bike } from '@cpt/shared/domain';
 import {
   Body,
@@ -15,12 +21,6 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
-import {
-  BikeDto,
-  CreateBikeDto,
-  UpdateBikeDto,
-  UpsertBikeDto,
-} from './dtos/bike.dto';
 import { ServerFeatureBikeService } from './server-feature-bike.service';
 
 @Controller({ path: 'bikes', version: '1' })

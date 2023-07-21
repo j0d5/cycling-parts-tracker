@@ -22,13 +22,14 @@
       ],
       "@cpt/client/ui-components": ["libs/client/ui-components/src/index.ts"],
       "@cpt/client/ui-style": ["libs/client/ui-style/src/index.ts"],
-      "@cpt/server/data-access-bike": [
-        "libs/server/data-access-bike/src/index.ts"
-      ],
+      "@cpt/server/data-access": ["libs/server/data-access/src/index.ts"],
+      "@cpt/server/feature-auth": ["libs/server/feature-auth/src/index.ts"],
       "@cpt/server/feature-bike": ["libs/server/feature-bike/src/index.ts"],
       "@cpt/server/feature-health": ["libs/server/feature-health/src/index.ts"],
+      "@cpt/server/feature-user": ["libs/server/feature-user/src/index.ts"],
+      "@cpt/server/util": ["libs/server/util/src/index.ts"],
+      "@cpt/server/util/testing": ["libs/server/util/src/lib/testing/index.ts"],
       "@cpt/shared/domain": ["libs/shared/domain/src/index.ts"],
-      "@cpt/shared/util": ["libs/shared/util/src/index.ts"],
       "@cpt/shared/util-env": ["libs/shared/util-env/src/index.ts"],
       "@cpt/shared/util-testing": ["libs/shared/util-testing/src/index.ts"]
     }
