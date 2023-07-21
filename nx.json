@@ -59,8 +59,7 @@
           "e2e",
           "stylelint",
           "build-storybook"
-        ],
-        "accessToken": "N2QxNTc1ZGItZDRkNC00MDE3LTk2YTItNWQzMzY4OTVmYzcyfHJlYWQtd3JpdGU="
+        ]
       }
     }
   },
