@@ -6,7 +6,7 @@ import { Bike } from '@cpt/shared/domain';
 import { BehaviorSubject, take } from 'rxjs';
 
 @Component({
-  selector: 'cycling-parts-tracker-feature-dashboard',
+  selector: 'cpt-feature-dashboard',
   standalone: true,
   imports: [CommonModule, BikeComponent],
   templateUrl: './feature-dashboard.component.html',
