@@ -36,7 +36,7 @@ describe('ServerFeatureBikeController', () => {
     // to be called, and returns a Promise that resolves to an
     // array of 5 to-do items
     jest.spyOn(service, 'getAll').mockReturnValue(
-      new Promise((res, rej) => {
+      new Promise((res) => {
         res(Array.from({ length: 5 }).map(() => createMockBike()));
       })
     );

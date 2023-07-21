@@ -31,7 +31,7 @@ export class ApiService {
     return this.http.put<Bike>(`${this.baseUrl}/bikes/${bikeId}`, bikeData);
   }
 
-  deleteBike(bikeId: string): Observable<never> {
-    return this.http.delete<never>(`${this.baseUrl}/bikes/${bikeId}`);
+  deleteBike(bikeId: string): Observable<null> {
+    return this.http.delete<null>(`${this.baseUrl}/bikes/${bikeId}`);
   }
 }

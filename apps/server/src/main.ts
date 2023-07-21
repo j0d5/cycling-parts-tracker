@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 
+import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -21,14 +22,17 @@ async function bootstrap() {
       // only decorated parameters in DTOs are delievered
       whitelist: true,
       // additional parameters will cause an error!
-      forbidNonWhitelisted: true,
+      // forbidNonWhitelisted: true,
     })
   );
+
+  const configService = app.get(ConfigService);
+  const port = configService.get('PORT') || 3000;
 
   // set up versioning
   app.enableVersioning({
     type: VersioningType.URI,
-    prefix: 'v1',
+    prefix: 'v',
   });
 
   // TODO - revisit and secure this!
@@ -44,11 +48,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/v1', app, document);
 
-  const port = process.env.PORT || 3000;
   await app.listen(port);
 
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}/v1`
   );
 }
 

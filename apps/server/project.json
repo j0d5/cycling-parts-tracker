@@ -26,13 +26,7 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true,
-          "fileReplacements": [
-            {
-              "replace": "libs/shared/util-env/src/lib/environment.ts",
-              "with": "libs/shared/util-env/src/lib/environment.development.ts"
-            }
-          ]
+          "namedChunks": true
         },
         "render": {
           "budgets": [

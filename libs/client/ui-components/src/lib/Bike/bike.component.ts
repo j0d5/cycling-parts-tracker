@@ -4,8 +4,15 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Bike } from '@cpt/shared/domain';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -14,46 +21,84 @@ import {
   faPencil,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
+import { EditableModule } from '@ngneat/edit-in-place';
+
+/**
+ * Create a type for the FormGroup, using only the properties of
+ * a to-do item that we want to be able to edit.
+ */
+type BikeFormType = {
+  [k in keyof Pick<Bike, 'manufacturer' | 'model'>]: FormControl<string>;
+};
 
 @Component({
   selector: 'cpt-bike',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    EditableModule,
+  ],
   templateUrl: './bike.component.html',
-  styleUrls: ['./bike.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BikeComponent {
+export class BikeComponent implements OnInit {
   faCheck = faCheck;
   faCircleOutline = faCircle;
   faPencil = faPencil;
   faTrashCan = faTrashCan;
 
+  bikeForm!: FormGroup<BikeFormType>;
+
   @Input() bike: Bike | undefined;
 
   @Output() toggleComplete = new EventEmitter<Bike>();
-  @Output() editBike = new EventEmitter<Bike>();
+  @Output() updateBike = new EventEmitter<Bike>();
   @Output() deleteBike = new EventEmitter<Bike>();
 
-  /**
-   * Simply emit the opposite of the current completed value
-   */
+  ngOnInit(): void {
+    if (this.bike) {
+      this.bikeForm = new FormGroup({
+        manufacturer: new FormControl(this.bike.manufacturer, {
+          nonNullable: true,
+        }),
+        model: new FormControl(this.bike.model, {
+          nonNullable: true,
+        }),
+      });
+    }
+  }
+
+  saveEdit() {
+    this.triggerUpdate({
+      ...this.bike,
+      ...this.bikeForm.value,
+    });
+  }
+
+  cancelEdit() {
+    this.bikeForm.reset();
+  }
+
   triggerToggleComplete() {
-    this.toggleComplete.emit(this.bike);
+    this.triggerUpdate({
+      ...this.bike,
+      archived: !this.bike?.archived,
+    });
   }
 
-  /**
-   * Emit the current bike data so that a service or parent component
-   * knows what to work with.
-   */
-  triggerEdit() {
-    this.editBike.emit(this.bike);
+  triggerUpdate(bike: Partial<Bike>) {
+    if (!this.bike) {
+      return;
+    }
+    this.updateBike.emit({
+      ...this.bike,
+      ...bike,
+    });
   }
 
-  /**
-   * Emit the current bike data, although only the ID will most likely
-   * be needed for deletion.
-   */
   triggerDelete() {
     this.deleteBike.emit(this.bike);
   }

@@ -146,6 +146,7 @@ export class UpdateBikeDto implements UpdateBike {
     type: String,
     example: `Propain`,
     readOnly: true,
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -155,6 +156,7 @@ export class UpdateBikeDto implements UpdateBike {
     type: String,
     example: `Tyee`,
     readOnly: true,
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -164,6 +166,7 @@ export class UpdateBikeDto implements UpdateBike {
     type: String,
     example: `10.10.2023`,
     readOnly: true,
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -173,6 +176,7 @@ export class UpdateBikeDto implements UpdateBike {
     type: Boolean,
     readOnly: true,
     default: false,
+    required: false,
   })
   @IsBoolean()
   @IsOptional()

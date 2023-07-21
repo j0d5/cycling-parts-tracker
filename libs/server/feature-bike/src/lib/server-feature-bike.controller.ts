@@ -23,7 +23,7 @@ import {
 } from './dtos/bike.dto';
 import { ServerFeatureBikeService } from './server-feature-bike.service';
 
-@Controller({ path: 'bikes' })
+@Controller({ path: 'bikes', version: '1' })
 export class ServerFeatureBikeController {
   constructor(private serverFeatureBikeService: ServerFeatureBikeService) {}
 

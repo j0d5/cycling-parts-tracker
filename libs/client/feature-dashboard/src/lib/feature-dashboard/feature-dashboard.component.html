@@ -9,6 +9,7 @@
             *ngIf="!bike.archived"
             (toggleComplete)="toggleComplete($event)"
             (deleteBike)="deleteBike($event)"
+            (updateBike)="editBike($event)"
           ></cpt-bike>
         </ng-container>
       </div>
@@ -21,6 +22,7 @@
             *ngIf="bike.archived"
             (toggleComplete)="toggleComplete($event)"
             (deleteBike)="deleteBike($event)"
+            (updateBike)="editBike($event)"
           ></cpt-bike>
         </ng-container>
       </div>

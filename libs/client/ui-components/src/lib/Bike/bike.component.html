@@ -1,4 +1,4 @@
-<div class="bike" *ngIf="bike">
+<div class="bike" *ngIf="bike" [formGroup]="bikeForm">
   <div class="bike-header">
     <button
       class="btn btn--sm bike-archived"
@@ -14,21 +14,53 @@
         ></fa-icon>
       </fa-stack>
     </button>
-    <h2 class="bike-title">{{ bike.manufacturer }}</h2>
+
+    <editable
+      (save)="saveEdit()"
+      (cancel)="cancelEdit()"
+      openBindingEvent="dblclick"
+    >
+      <ng-template viewMode
+        ><h4 class="bike-manufacturer">
+          {{ bike.manufacturer }}
+        </h4></ng-template
+      >
+      <ng-template editMode>
+        <input
+          class="form-control h4"
+          formControlName="manufacturer"
+          editableOnEnter
+          editableOnEscape
+        />
+      </ng-template>
+    </editable>
   </div>
 
   <div class="bike-body">
-    <p class="bike-model">{{ bike.model }}</p>
+    <editable
+      (save)="saveEdit()"
+      (cancel)="cancelEdit()"
+      openBindingEvent="dblclick"
+    >
+      <ng-template viewMode>
+        <p class="bike-model">{{ bike.model }}</p>
+      </ng-template>
+
+      <ng-template editMode>
+        <textarea
+          editableOnEnter
+          editableOnEscape
+          class="form-control"
+          formControlName="model"
+        ></textarea>
+      </ng-template>
+    </editable>
   </div>
 
   <div class="bike-footer">
     <div class="bike-actions">
-      <button class="btn btn--danger" (click)="triggerDelete()">
+      <button class="btn btn--danger btn--sm" (click)="triggerDelete()">
         <fa-icon [icon]="faTrashCan"></fa-icon>
-      </button>
-
-      <button class="btn btn--primary" (click)="triggerEdit()">
-        <fa-icon [icon]="faPencil"></fa-icon>
       </button>
     </div>
   </div>

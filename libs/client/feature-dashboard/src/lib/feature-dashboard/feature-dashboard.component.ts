@@ -42,9 +42,17 @@ export class FeatureDashboardComponent implements OnInit {
   }
 
   deleteBike({ id }: Bike) {
-    console.log('Delete bike:', id);
     this.apiService
       .deleteBike(id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.refreshItems();
+      });
+  }
+
+  editBike(bike: Bike) {
+    this.apiService
+      .updateBike(bike.id, bike)
       .pipe(take(1))
       .subscribe(() => {
         this.refreshItems();

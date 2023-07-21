@@ -18,6 +18,11 @@ WORKDIR /usr/src/app
 
 RUN apk add --no-cache dumb-init
 
+ENV HOST=0.0.0.0
+ENV PORT=3000
+
+EXPOSE ${PORT}
+
 # pull in packages from builder stage
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY --from=deps /usr/src/app/package.json ./package.json

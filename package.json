@@ -25,6 +25,7 @@
     "@nestjs/swagger": "^7.1.1",
     "@nestjs/terminus": "^10.0.1",
     "@nestjs/typeorm": "^10.0.0",
+    "@ngneat/edit-in-place": "^1.6.1",
     "@nrwl/angular": "^16.5.2",
     "axios": "^1.0.0",
     "class-transformer": "^0.5.1",
