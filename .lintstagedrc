@@ -1,11 +1,8 @@
 {
-    "*.ts": [
-        "eslint --fix --format stylish"
-    ],
-    "*": [
-        "prettier --write"
-    ],
-    "*.md": [
-        "markdownlint -i node_modules ."
-    ]
+  "{apps,libs}/**/*.{ts,js,html,json,scss,css,md}": [
+    "nx affected:lint --uncommitted --fix true"
+  ],
+  "*.{ts,js,html,json,scss,css,md,yaml,yml}": [
+    "nx format:write --base=main --head=HEAD"
+  ]
 }
