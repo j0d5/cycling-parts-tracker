@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: cycling-parts-tracker-client
+    repo: https://github.com/j0d5/cycling-parts-tracker
+    env: docker
+    plan: free
+    dockerfilePath: ./apps/client/Dockerfile.render
+    dockerContext: ./
+
+  - type: web
+    name: cycling-parts-tracker-server
+    repo: https://github.com/j0d5/cycling-parts-tracker
+    env: docker
+    plan: free
+    dockerfilePath: ./apps/server/Dockerfile.render
+    dockerContext: ./
+
+databases:
+  - name: cycling-parts-tracker-db
+    plan: free

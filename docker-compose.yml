@@ -6,11 +6,12 @@ services:
     container_name: client
     image: client
     ports:
-      - 8080:80
+      - 8081:80
 
     # ensures an API is available
     depends_on:
-      - server
+      server:
+        condition: service_healthy
 
     # nginx's default image is based on debian, so we can use
     # 'service' to check the health of the process instead of
@@ -50,7 +51,7 @@ services:
   #   container_name: swagger
   #   image: 'swaggerapi/swagger-ui:v3.25.0'
   #   ports:
-  #     - '8081:8080'
+  #     - '8082:8080'
   #   volumes:
   #     - ./${SWAGGER_JSON_FILE}:/usr/share/spec/${SWAGGER_JSON_FILE}
   #   environment:
