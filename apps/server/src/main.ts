@@ -15,7 +15,15 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      // only decorated parameters in DTOs are delievered
+      whitelist: true,
+      // additional parameters will cause an error!
+      forbidNonWhitelisted: true,
+    })
+  );
 
   // set up versioning
   app.enableVersioning({

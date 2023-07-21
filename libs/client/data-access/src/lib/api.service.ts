@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Bike, CreateBike, UpdateBike, UpsertBike } from '@cpt/shared/domain';
+import { environment } from '@cpt/shared/util-env';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,28 +9,29 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
 
   getAllBikeItems(): Observable<Bike[]> {
-    return this.http.get<Bike[]>(`api/bikes`);
+    return this.http.get<Bike[]>(`${this.baseUrl}/bikes`);
   }
 
   getBikeById(bikeId: string): Observable<Bike> {
-    return this.http.get<Bike>(`api/bikes/${bikeId}`);
+    return this.http.get<Bike>(`${this.baseUrl}/bikes/${bikeId}`);
   }
 
   createBike(bikeData: CreateBike): Observable<Bike> {
-    return this.http.post<Bike>(`/api/bikes`, bikeData);
+    return this.http.post<Bike>(`${this.baseUrl}/bikes`, bikeData);
   }
 
   updateBike(bikeId: string, bikeData: UpdateBike): Observable<Bike> {
-    return this.http.patch<Bike>(`/api/bikes/${bikeId}`, bikeData);
+    return this.http.patch<Bike>(`${this.baseUrl}/bikes/${bikeId}`, bikeData);
   }
 
   createOrUpdateBike(bikeId: string, bikeData: UpsertBike): Observable<Bike> {
-    return this.http.put<Bike>(`/api/bikes/${bikeId}`, bikeData);
+    return this.http.put<Bike>(`${this.baseUrl}/bikes/${bikeId}`, bikeData);
   }
 
   deleteBike(bikeId: string): Observable<never> {
-    return this.http.delete<never>(`/api/bikes/${bikeId}`);
+    return this.http.delete<never>(`${this.baseUrl}/bikes/${bikeId}`);
   }
 }

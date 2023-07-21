@@ -16,4 +16,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/server-e2e',
+  detectOpenHandles: true,
 };

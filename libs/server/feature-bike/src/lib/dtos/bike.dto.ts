@@ -47,7 +47,7 @@ export class BikeDto implements Bike {
   })
   @IsString()
   @IsNotEmpty()
-  date!: string;
+  date!: Date;
 
   @ApiProperty({
     type: Boolean,
@@ -91,7 +91,7 @@ export class CreateBikeDto
   })
   @IsString()
   @IsNotEmpty()
-  date!: string;
+  date!: Date;
 }
 
 export class UpsertBikeDto implements UpsertBike {
@@ -129,7 +129,7 @@ export class UpsertBikeDto implements UpsertBike {
   })
   @IsString()
   @IsNotEmpty()
-  date!: string;
+  date!: Date;
 
   @ApiProperty({
     type: Boolean,
@@ -149,7 +149,7 @@ export class UpdateBikeDto implements UpdateBike {
   })
   @IsString()
   @IsOptional()
-  manufacturer!: string;
+  manufacturer?: string;
 
   @ApiProperty({
     type: String,
@@ -158,7 +158,7 @@ export class UpdateBikeDto implements UpdateBike {
   })
   @IsString()
   @IsOptional()
-  model!: string;
+  model?: string;
 
   @ApiProperty({
     type: String,
@@ -167,7 +167,7 @@ export class UpdateBikeDto implements UpdateBike {
   })
   @IsString()
   @IsOptional()
-  date!: string;
+  date?: Date;
 
   @ApiProperty({
     type: Boolean,
@@ -176,5 +176,5 @@ export class UpdateBikeDto implements UpdateBike {
   })
   @IsBoolean()
   @IsOptional()
-  archived!: boolean;
+  archived?: boolean;
 }
