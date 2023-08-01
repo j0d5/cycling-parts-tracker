@@ -1,6 +1,10 @@
 import { UserEntitySchema } from '@cpt/server/data-access';
 import { CreateUser, UpdateUser, User } from '@cpt/shared/domain';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -33,15 +37,19 @@ export class ServerFeatureUserService {
     return user;
   }
 
-  /**
-   * TODO - make number of rounds configurable via ConfigService!
-   */
   async create(user: CreateUser): Promise<User> {
+    const existing = await this.userRepository.findOne({
+      where: { email: user.email },
+    });
+    if (existing) {
+      throw new BadRequestException(`User '${user.email}' already exists!`);
+    }
     const { email, password } = user;
-    // set the payload password to a _hash_ of the originally
-    // supplied password!
-    user.password = await bcrypt.hash(password, 10);
-    const newUser = await this.userRepository.save({ email, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await this.userRepository.save({
+      email,
+      password: hashedPassword,
+    });
     return newUser;
   }
 

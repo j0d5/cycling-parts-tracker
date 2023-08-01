@@ -4,8 +4,10 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { Bike } from '@cpt/shared/domain';
-import { createMockBike } from '@cpt/shared/util-testing';
+import { createMockBike, createMockUser } from '@cpt/shared/util-testing';
 import { ApiService } from './api.service';
+
+const mockUser = createMockUser();
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -24,7 +26,9 @@ describe('ApiService', () => {
   });
 
   it('should get a list of bike items', (done) => {
-    const Bikes: Bike[] = Array.from({ length: 5 }).map(() => createMockBike());
+    const Bikes: Bike[] = Array.from({ length: 5 }).map(() =>
+      createMockBike(mockUser.id)
+    );
     const httpSpy = jest.spyOn(http, 'get').mockReturnValue(of(Bikes));
     service.getAllBikeItems().subscribe({
       next: (val) => {
@@ -38,7 +42,7 @@ describe('ApiService', () => {
   });
 
   it('should get a single bike item', (done) => {
-    const Bike = createMockBike();
+    const Bike = createMockBike(mockUser.id);
     const httpSpy = jest.spyOn(http, 'get').mockReturnValue(of(Bike));
     service.getBikeById(Bike.id).subscribe({
       next: (val) => {
@@ -51,7 +55,7 @@ describe('ApiService', () => {
   });
 
   it('should create a single bike item', (done) => {
-    const Bike = createMockBike();
+    const Bike = createMockBike(mockUser.id);
     const httpSpy = jest.spyOn(http, 'post').mockReturnValue(of(Bike));
     service.createBike(Bike).subscribe({
       next: (val) => {
@@ -65,7 +69,7 @@ describe('ApiService', () => {
   });
 
   it('should update a single bike item', (done) => {
-    const Bike = createMockBike();
+    const Bike = createMockBike(mockUser.id);
     const httpSpy = jest.spyOn(http, 'patch').mockReturnValue(of(Bike));
     service.updateBike(Bike.id, Bike).subscribe({
       next: (val) => {
@@ -79,7 +83,7 @@ describe('ApiService', () => {
   });
 
   it('should update a single bike item', (done) => {
-    const Bike = createMockBike();
+    const Bike = createMockBike(mockUser.id);
     const httpSpy = jest.spyOn(http, 'put').mockReturnValue(of(Bike));
     service.createOrUpdateBike(Bike.id, Bike).subscribe({
       next: (val) => {
@@ -93,7 +97,7 @@ describe('ApiService', () => {
   });
 
   it('should delete a single bike item', (done) => {
-    const Bike = createMockBike();
+    const Bike = createMockBike(mockUser.id);
     const httpSpy = jest.spyOn(http, 'delete').mockReturnValue(of(null));
     service.deleteBike(Bike.id).subscribe({
       next: (val) => {

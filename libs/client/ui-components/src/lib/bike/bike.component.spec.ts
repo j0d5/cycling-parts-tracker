@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { createMockBike } from '@cpt/shared/util-testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { createMockBike, createMockUser } from '@cpt/shared/util-testing';
 import { EditableModule } from '@ngneat/edit-in-place';
 import { BikeComponent } from './bike.component';
+
+const mockUser = createMockUser();
 
 describe('BikeComponent', () => {
   let component: BikeComponent;
@@ -31,14 +33,14 @@ describe('BikeComponent', () => {
   });
 
   it('should init with data without issue', () => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
     component.bike = bike;
     component.ngOnInit();
     expect(component.bikeForm).toBeDefined();
   });
 
   it('should save data', (done) => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
     component.updateBike.subscribe((data) => {
       expect(data).toStrictEqual(bike);
       done();
@@ -50,7 +52,7 @@ describe('BikeComponent', () => {
   });
 
   it('should cancel an edit', () => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
     component.bike = bike;
     component.ngOnInit();
     component.bikeForm.controls.manufacturer.setValue('foo');
@@ -59,7 +61,7 @@ describe('BikeComponent', () => {
   });
 
   it('should successfully toggle completion', (done) => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
 
     component.updateBike.subscribe((data) => {
       expect(data).toStrictEqual({ ...bike, archived: !bike.archived });
@@ -77,7 +79,7 @@ describe('BikeComponent', () => {
   });
 
   it('should save data', (done) => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
     component.deleteBike.subscribe((data) => {
       expect(data).toStrictEqual(bike);
       done();

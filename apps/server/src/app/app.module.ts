@@ -3,7 +3,9 @@ import { Logger, Module } from '@nestjs/common';
 import { ServerFeatureAuthModule } from '@cpt/server/feature-auth';
 import { ServerFeatureBikeModule } from '@cpt/server/feature-bike';
 import { ServerFeatureHealthModule } from '@cpt/server/feature-health';
+import { DatabaseExceptionFilter, JwtAuthGuard } from '@cpt/server/util';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import joi from 'joi';
 
@@ -40,15 +42,15 @@ import joi from 'joi';
     ServerFeatureHealthModule,
     ServerFeatureAuthModule,
   ],
-  // providers: [
-  //   {
-  //     provide: APP_GUARD,
-  //     useClass: JwtAuthGuard,
-  //   },
-  //   {
-  //     provide: APP_FILTER,
-  //     useClass: DatabaseExceptionFilter,
-  //   },
-  // ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: DatabaseExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

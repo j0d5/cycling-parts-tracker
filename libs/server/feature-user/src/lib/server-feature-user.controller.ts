@@ -1,8 +1,16 @@
 import { CreateUserDto } from '@cpt/server/data-access';
-import { SkipAuth } from '@cpt/server/util';
+import { ReqUserId, SkipAuth } from '@cpt/server/util';
 import { PublicUserData } from '@cpt/shared/domain';
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  ParseUUIDPipe,
+  Post,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ServerFeatureUserService } from './server-feature-user.service';
 
 @Controller({ path: 'users', version: '1' })
@@ -19,5 +27,20 @@ export class ServerFeatureUserController {
       email,
       bikes: [],
     };
+  }
+
+  @Get(':id')
+  @ApiBearerAuth()
+  async getUser(
+    @ReqUserId() reqUserId: string,
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<PublicUserData> {
+    if (reqUserId !== id) {
+      throw new NotFoundException();
+    }
+    const { password, ...user } = await this.serverFeatureUserService.getOne(
+      id
+    );
+    return user;
   }
 }

@@ -56,7 +56,7 @@ describe('ServerFeatureAuthService', () => {
     expect(validUser).toStrictEqual({
       id: mockUser.id,
       email: mockUser.email,
-      todos: [],
+      bikes: [],
     });
   });
 

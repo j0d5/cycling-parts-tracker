@@ -1,26 +1,15 @@
 import { BikeEntitySchema } from '@cpt/server/data-access';
-import { Bike, CreateBike } from '@cpt/shared/domain';
-import { createMockBike } from '@cpt/shared/util-testing';
-import { NotFoundException } from '@nestjs/common';
+import { MockType, repositoryMockFactory } from '@cpt/server/util/testing';
+import { Bike } from '@cpt/shared/domain';
+import { createMockBike, createMockUser } from '@cpt/shared/util-testing';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { randUuid, seed } from '@ngneat/falso';
 import { QueryFailedError, Repository } from 'typeorm';
 import { ServerFeatureBikeService } from './server-feature-bike.service';
 
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<unknown>;
-};
-
-export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
-  () => ({
-    findOne: jest.fn((entity) => entity),
-    findOneBy: jest.fn(() => ({})),
-    save: jest.fn((entity) => entity),
-    findOneOrFail: jest.fn(() => ({})),
-    delete: jest.fn(() => null),
-    find: jest.fn((entities) => entities),
-  })
-);
+const mockUser = createMockUser();
 
 describe('ServerFeatureBikeService', () => {
   let service: ServerFeatureBikeService;
@@ -41,87 +30,160 @@ describe('ServerFeatureBikeService', () => {
     repoMock = module.get(getRepositoryToken(BikeEntitySchema));
   });
 
+  beforeEach(() => {
+    seed(Math.random().toString());
+  });
+
   it('should be defined', () => {
     expect(service).toBeTruthy();
   });
-  it('should return an array of to-do items', async () => {
-    const bikes = Array.from({ length: 5 }).map(() => createMockBike());
+
+  it('should return an array of bike items for a specific user', async () => {
+    const bikes = Array.from({ length: 5 }).map(() =>
+      createMockBike(mockUser.id)
+    );
     repoMock.find?.mockReturnValue(bikes);
-    expect((await service.getAll()).length).toBe(bikes.length);
+    expect((await service.getAll(mockUser.id)).length).toBe(bikes.length);
     expect(repoMock.find).toHaveBeenCalled();
   });
 
   it('should return an a single bike by ID', async () => {
-    const bikes = Array.from({ length: 5 }).map(() => createMockBike());
+    const bikes = Array.from({ length: 5 }).map(() =>
+      createMockBike(mockUser.id)
+    );
     repoMock.findOneBy?.mockReturnValue(bikes[0]);
-    expect(await service.getOne(bikes[0].id)).toStrictEqual(bikes[0]);
-    expect(repoMock.findOneBy).toHaveBeenCalledWith({ id: bikes[0].id });
+    expect(await service.getOne(mockUser.id, bikes[0].id)).toStrictEqual(
+      bikes[0]
+    );
+    expect(repoMock.findOneBy).toHaveBeenCalledWith({
+      id: bikes[0].id,
+      user: { id: mockUser.id },
+    });
   });
 
   it('should throw an exception when a bike ID is not found', async () => {
     repoMock.findOneBy?.mockReturnValue(undefined);
     try {
-      await service.getOne('foo');
+      await service.getOne(mockUser.id, 'foo');
     } catch (err) {
       expect(err instanceof NotFoundException).toBe(true);
-      expect(repoMock.findOneBy).toHaveBeenCalledWith({ id: 'foo' });
+      expect(repoMock.findOneBy).toHaveBeenCalledWith({
+        id: 'foo',
+        user: { id: mockUser.id },
+      });
     }
   });
 
   it('should create a bike', async () => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
+    repoMock.findOneBy?.mockReturnValue(null);
+    repoMock.findOneByOrFail?.mockReturnValue(bike);
     repoMock.save?.mockReturnValue(bike);
-    expect(await service.create(bike)).toStrictEqual(bike);
-    expect(repoMock.save).toHaveBeenCalledWith(bike);
+    expect(await service.create(mockUser.id, bike)).toStrictEqual(bike);
+    expect(repoMock.save).toHaveBeenCalledWith({
+      ...bike,
+      user: {
+        id: mockUser.id,
+      },
+    });
   });
 
   it('should catch an error if a duplicate manufacturer is detected', async () => {
-    const bike = createMockBike();
-    repoMock.save?.mockImplementation((bike: CreateBike) => {
+    const bike = createMockBike(mockUser.id);
+    repoMock.save?.mockImplementation(() => {
       const err = new QueryFailedError('unique constraint failed', [], {});
       err.message =
         'ERROR SQLITE_CONSTRAINT: UNIQUE constraint failed: bike.manufacturer';
       throw err;
     });
     try {
-      await service.create(bike);
+      await service.create(mockUser.id, bike);
     } catch (err) {
-      expect(err).toBeInstanceOf(QueryFailedError);
+      expect(err).toBeInstanceOf(BadRequestException);
     }
   });
 
   it('should update a bike', async () => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
     const newTitle = 'foo';
     repoMock.findOneOrFail?.mockReturnValue({
       ...bike,
       manufacturer: newTitle,
     });
-    const res = await service.update(bike.id, { manufacturer: newTitle });
+    const res = await service.update(mockUser.id, bike.id, {
+      manufacturer: newTitle,
+    });
     expect(res.manufacturer).toBe(newTitle);
     expect(repoMock.save).toHaveBeenCalledWith({
+      user: { id: mockUser.id },
       id: bike.id,
       manufacturer: newTitle,
     });
     expect(repoMock.findOneOrFail).toHaveBeenCalled();
   });
 
-  it('should upsert a bike', async () => {
-    const bike = createMockBike();
+  it("should not update a bike that doesn't exist", async () => {
+    repoMock.findOneBy?.mockReturnValue(null);
+    try {
+      await service.update(mockUser.id, '', {});
+    } catch (err) {
+      expect(err).toBeInstanceOf(NotFoundException);
+    }
+  });
+
+  it('should upsert a new bike', async () => {
+    const bike = createMockBike(mockUser.id);
     const newTitle = 'foo';
+    repoMock.findOne?.mockReturnValue(null);
     repoMock.findOneOrFail?.mockReturnValue({
       ...bike,
       manufacturer: newTitle,
     });
-    const res = await service.upsert(bike);
+    const res = await service.upsert(mockUser.id, bike.id, bike);
     expect(res.manufacturer).toBe(newTitle);
-    expect(repoMock.save).toHaveBeenCalledWith(bike);
+    expect(repoMock.save).toHaveBeenCalledWith({
+      ...bike,
+      user: { id: mockUser.id },
+    });
     expect(repoMock.findOneOrFail).toHaveBeenCalled();
   });
 
+  it('should not upsert a bike of another user', async () => {
+    const bike = createMockBike(mockUser.id);
+    const altBike = createMockBike(randUuid());
+    repoMock.findOne?.mockReturnValue(altBike);
+    try {
+      await service.upsert(mockUser.id, altBike.id, altBike);
+    } catch (err) {
+      expect(err).toBeInstanceOf(BadRequestException);
+    }
+  });
+
+  it('should not allow ID to change during an upsert', async () => {
+    const bike = createMockBike(mockUser.id);
+    repoMock.findOne?.mockReturnValue(bike);
+    try {
+      await service.upsert(mockUser.id, bike.id, { ...bike, id: randUuid() });
+    } catch (err) {
+      console.log(err);
+      expect(err).toBeInstanceOf(BadRequestException);
+    }
+  });
+
   it('should delete a bike', async () => {
-    repoMock.delete?.mockReturnValue('foo');
-    expect(await service.delete('foo')).toBeUndefined();
-    expect(repoMock.delete).toHaveBeenCalledWith({ id: 'foo' });
+    const bike = createMockBike(mockUser.id);
+    repoMock.findOneBy?.mockReturnValue(bike);
+    repoMock.remove?.mockReturnValue(bike);
+    expect(await service.delete(mockUser.id, bike.id)).toBeUndefined();
+    expect(repoMock.remove).toHaveBeenCalledWith(bike);
+  });
+
+  it("should not delete a bike that doesn't exist", async () => {
+    repoMock.findOneBy?.mockReturnValue(null);
+    try {
+      await service.delete(mockUser.id, '');
+    } catch (err) {
+      expect(err).toBeInstanceOf(NotFoundException);
+    }
   });
 });

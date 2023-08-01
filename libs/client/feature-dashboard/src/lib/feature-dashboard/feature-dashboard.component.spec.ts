@@ -2,9 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApiService } from '@cpt/client/data-access';
-import { createMockBike } from '@cpt/shared/util-testing';
+import { createMockBike, createMockUser } from '@cpt/shared/util-testing';
 import { of } from 'rxjs';
 import { FeatureDashboardComponent } from './feature-dashboard.component';
+
+const mockUser = createMockUser();
 
 describe('FeatureDashboardComponent', () => {
   let component: FeatureDashboardComponent;
@@ -28,12 +30,14 @@ describe('FeatureDashboardComponent', () => {
   });
 
   it('should return a unique id for each bike', () => {
-    const bike = createMockBike();
+    const bike = createMockBike(mockUser.id);
     expect(component.trackBike(0, bike)).toBe(bike.id);
   });
 
   it('should trigger a refresh of data', (done) => {
-    const bikes = Array.from({ length: 5 }).map(() => createMockBike());
+    const bikes = Array.from({ length: 5 }).map(() =>
+      createMockBike(mockUser.id)
+    );
     const spy = jest
       .spyOn(apiService, 'getAllBikeItems')
       .mockReturnValue(of(bikes));
@@ -44,7 +48,7 @@ describe('FeatureDashboardComponent', () => {
   });
 
   it('should be able to toggle the completion of a bike', (done) => {
-    const bike = createMockBike({ archived: false });
+    const bike = createMockBike(mockUser.id, { archived: false });
     const updateSpy = jest
       .spyOn(apiService, 'updateBike')
       .mockReturnValue(of({ ...bike, archived: true }));
@@ -60,7 +64,9 @@ describe('FeatureDashboardComponent', () => {
   });
 
   it('should be able to delete a bike', (done) => {
-    const bikes = Array.from({ length: 5 }).map(() => createMockBike());
+    const bikes = Array.from({ length: 5 }).map(() =>
+      createMockBike(mockUser.id)
+    );
     component.bikeItems$.next(bikes);
     const deleteSpy = jest
       .spyOn(apiService, 'deleteBike')
@@ -76,7 +82,7 @@ describe('FeatureDashboardComponent', () => {
   });
 
   it('should be able to toggle the completion of a bike', (done) => {
-    const bike = createMockBike({ archived: false });
+    const bike = createMockBike(mockUser.id, { archived: false });
     const updateSpy = jest
       .spyOn(apiService, 'updateBike')
       .mockReturnValue(of({ ...bike, archived: true }));

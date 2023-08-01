@@ -1,6 +1,12 @@
 import { Bike, UpdateBike, UpsertBike } from '@cpt/shared/domain';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 /**
  * This DTO was added so that a class can be used as a return type in the
@@ -41,11 +47,11 @@ export class BikeDto implements Bike {
   model!: string;
 
   @ApiProperty({
-    type: String,
-    example: `10.10.2023`,
+    type: Date,
+    example: `2023-04-26T23:50:00.505Z`,
     readOnly: true,
   })
-  @IsString()
+  @IsDateString()
   @IsNotEmpty()
   date!: Date;
 
@@ -85,11 +91,11 @@ export class CreateBikeDto
   model!: string;
 
   @ApiProperty({
-    type: String,
-    example: `10.10.2023`,
+    type: Date,
+    example: `2023-04-26T23:50:00.505Z`,
     readOnly: true,
   })
-  @IsString()
+  @IsDateString()
   @IsNotEmpty()
   date!: Date;
 }
@@ -123,11 +129,11 @@ export class UpsertBikeDto implements UpsertBike {
   model!: string;
 
   @ApiProperty({
-    type: String,
-    example: `10.10.2023`,
+    type: Date,
+    example: `2023-04-26T23:50:00.505Z`,
     readOnly: true,
   })
-  @IsString()
+  @IsDateString()
   @IsNotEmpty()
   date!: Date;
 
@@ -163,12 +169,12 @@ export class UpdateBikeDto implements UpdateBike {
   model?: string;
 
   @ApiProperty({
-    type: String,
-    example: `10.10.2023`,
+    type: Date,
+    example: `2023-04-26T23:50:00.505Z`,
     readOnly: true,
     required: false,
   })
-  @IsString()
+  @IsDateString()
   @IsOptional()
   date?: Date;
 
