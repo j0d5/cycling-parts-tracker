@@ -10,7 +10,7 @@
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": [],
+            "allow": ["@cpt/server/feature-user"],
             "depConstraints": [
               {
                 "sourceTag": "*",
@@ -39,7 +39,6 @@
               {
                 "sourceTag": "type:feature",
                 "onlyDependOnLibsWithTags": [
-                  "type:feature",
                   "type:data-access",
                   "type:util",
                   "type:ui",
