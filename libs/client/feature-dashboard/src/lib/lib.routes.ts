@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
+import { authGuard } from '@cpt/client/data-access';
 import { FeatureDashboardComponent } from './feature-dashboard/feature-dashboard.component';
 
-export const featureDashboardRoutes: Route[] = [
-  { path: '', component: FeatureDashboardComponent },
+export const clientFeatureDashboardRoutes: Route[] = [
+  { path: '', component: FeatureDashboardComponent, canActivate: [authGuard] },
 ];

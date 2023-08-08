@@ -1,4 +1,8 @@
 import { Route } from '@angular/router';
-import { featureDashboardRoutes } from '@cpt/client/feature-dashboard';
+import { clientFeatureDashboardRoutes } from '@cpt/client/feature-dashboard';
+import { clientFeatureLoginRoutes } from '@cpt/client/feature-login';
 
-export const appRoutes: Route[] = [...featureDashboardRoutes];
+export const appRoutes: Route[] = [
+  ...clientFeatureDashboardRoutes,
+  ...clientFeatureLoginRoutes,
+];
