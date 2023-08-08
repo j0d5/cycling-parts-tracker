@@ -16,7 +16,6 @@ type LoginFormType = {
   email: FormControl<string>;
   password: FormControl<string>;
 };
-
 @Component({
   selector: 'cycling-parts-tracker-client-feature-login',
   standalone: true,
@@ -42,7 +41,7 @@ export class ClientFeatureLoginComponent {
 
   errorMessage$ = new BehaviorSubject<string | null>(null);
 
-  // private readonly apiService = inject(BikeService);
+  // private readonly apiService = inject(ApiService);
 
   get emailInvalidAndTouched(): boolean {
     return (
