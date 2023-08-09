@@ -3,13 +3,26 @@
     <div class="page" *ngIf="bikeItems$ | async as bikeItems">
       <div class="incomplete-column">
         <h1>Current</h1>
+        <div class="bike add-bike" *ngIf="!addingBike">
+          <div class="bike-body">
+            <button class="btn btn--default" (click)="triggerEmptyBike()">
+              <fa-icon [icon]="faPlusSquare" [size]="'3x'"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <cpt-bike
+          *ngIf="addingBike"
+          (createBike)="createBike($event)"
+          (deleteBike)="triggerEmptyBike()"
+        ></cpt-bike>
         <ng-container *ngFor="let bike of bikeItems">
           <cpt-bike
             [bike]="bike"
             *ngIf="!bike.archived"
-            (toggleComplete)="toggleComplete($event)"
+            (toggleArchive)="toggleArchive($event)"
             (deleteBike)="deleteBike($event)"
             (updateBike)="editBike($event)"
+            (createBike)="createBike($event)"
           ></cpt-bike>
         </ng-container>
       </div>
@@ -20,7 +33,7 @@
           <cpt-bike
             [bike]="bike"
             *ngIf="bike.archived"
-            (toggleComplete)="toggleComplete($event)"
+            (toggleArchive)="toggleArchive($event)"
             (deleteBike)="deleteBike($event)"
             (updateBike)="editBike($event)"
           ></cpt-bike>

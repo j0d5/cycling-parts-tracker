@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@cpt/client/data-access';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 
 type LoginFormType = {
   email: FormControl<string>;
@@ -64,9 +64,7 @@ export class ClientFeatureLoginComponent {
       const { email, password } = this.loginForm.getRawValue();
       this.authService
         .loginUser({ email, password })
-        .pipe
-        // take(1)
-        ()
+        .pipe(take(1))
         .subscribe({
           next: () => {
             console.log(`User authenticated, redirecting to dashboard...`);

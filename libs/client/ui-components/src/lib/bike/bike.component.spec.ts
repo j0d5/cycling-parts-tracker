@@ -70,7 +70,7 @@ describe('BikeComponent', () => {
 
     component.bike = bike;
     component.ngOnInit();
-    component.triggerToggleComplete();
+    component.triggerToggleArchive();
   });
 
   it('should not trigger update when bike is undefined', () => {

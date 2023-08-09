@@ -1,66 +1,109 @@
-<div class="bike" *ngIf="bike" [formGroup]="bikeForm">
+<div class="bike" [formGroup]="bikeForm">
   <div class="bike-header">
-    <button
-      class="btn btn--sm bike-archived"
-      [class.bike-archived--true]="bike.archived"
-      (click)="triggerToggleComplete()"
-    >
-      <fa-stack>
-        <fa-icon [icon]="faCircleOutline" stackItemSize="2x"></fa-icon>
-        <fa-icon
-          [icon]="faCheck"
-          stackItemSize="1x"
-          *ngIf="bike.archived"
-        ></fa-icon>
-      </fa-stack>
-    </button>
+    <ng-container *ngIf="!bike; else notEmpty">
+      <input
+        class="form-control h4"
+        id="input-form-control-empty"
+        formControlName="manufacturer"
+      />
+    </ng-container>
 
-    <editable
-      (save)="saveEdit()"
-      (cancel)="cancelEdit()"
-      openBindingEvent="dblclick"
-    >
-      <ng-template viewMode
-        ><h4 class="bike-manufacturer">
-          {{ bike.manufacturer }}
-        </h4></ng-template
+    <ng-template #notEmpty>
+      <editable
+        (save)="saveEdit()"
+        (cancel)="cancelEdit()"
+        openBindingEvent="dblclick"
+        #editableTitle
+        style="flex: 1; display: flex"
       >
-      <ng-template editMode>
-        <input
-          class="form-control h4"
-          formControlName="manufacturer"
-          editableOnEnter
-          editableOnEscape
-        />
-      </ng-template>
-    </editable>
+        <ng-template viewMode
+          ><h3 class="bike-manufacturer">
+            {{ bike?.manufacturer }}
+          </h3></ng-template
+        >
+        <ng-template editMode>
+          <input
+            id="input-form-control-populated"
+            class="form-control h4"
+            formControlName="manufacturer"
+            editableOnEnter
+            editableOnEscape
+          />
+        </ng-template>
+      </editable>
+    </ng-template>
   </div>
 
   <div class="bike-body">
-    <editable
-      (save)="saveEdit()"
-      (cancel)="cancelEdit()"
-      openBindingEvent="dblclick"
-    >
-      <ng-template viewMode>
-        <p class="bike-model">{{ bike.model }}</p>
-      </ng-template>
+    <ng-container *ngIf="!bike; else notEmptyDesc">
+      <textarea
+        id="textarea-form-control-empty"
+        class="form-control"
+        formControlName="model"
+      ></textarea>
+    </ng-container>
 
-      <ng-template editMode>
-        <textarea
-          editableOnEnter
-          editableOnEscape
-          class="form-control"
-          formControlName="model"
-        ></textarea>
-      </ng-template>
-    </editable>
+    <ng-template #notEmptyDesc>
+      <editable
+        (save)="saveEdit()"
+        (cancel)="cancelEdit()"
+        openBindingEvent="dblclick"
+        #editableDescription
+      >
+        <ng-template viewMode>
+          <p class="bike-model truncate">{{ bike?.model }}</p>
+        </ng-template>
+
+        <ng-template editMode>
+          <textarea
+            id="textarea-form-control-populated"
+            editableOnEnter
+            editableOnEscape
+            class="form-control"
+            formControlName="model"
+          ></textarea>
+        </ng-template>
+      </editable>
+    </ng-template>
   </div>
 
   <div class="bike-footer">
     <div class="bike-actions">
-      <button class="btn btn--danger btn--sm" (click)="triggerDelete()">
+      <button
+        id="btn-delete"
+        class="btn btn--danger btn--sm"
+        [class.btn--disabled]="bike && bikeForm.invalid"
+        (click)="triggerDelete()"
+      >
         <fa-icon [icon]="faTrashCan"></fa-icon>
+      </button>
+
+      <button
+        *ngIf="!bike"
+        id="btn-save"
+        class="btn btn--secondary btn--sm"
+        [class.btn--disabled]="bikeForm.invalid"
+        (click)="triggerCreate()"
+      >
+        <fa-icon [icon]="faFloppyDisk"></fa-icon>
+      </button>
+
+      <button
+        id="btn-complete"
+        class="btn btn--sm bike-archived"
+        [class.bike-archived--true]="bike.archived"
+        [class.btn--disabled]="!bike"
+        (click)="triggerToggleArchive()"
+        *ngIf="bike"
+      >
+        <fa-stack>
+          <fa-icon [icon]="faCircleOutline" stackItemSize="2x"></fa-icon>
+          <fa-icon
+            [icon]="faCheck"
+            stackItemSize="1x"
+            *ngIf="bike?.archived"
+          ></fa-icon>
+        </fa-stack>
       </button>
     </div>
   </div>

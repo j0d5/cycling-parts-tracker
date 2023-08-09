@@ -38,8 +38,8 @@ export default {
     triggerEdit: {
       action: 'edit',
     },
-    triggerToggleComplete: {
-      action: 'toggleComplete',
+    triggerToggleArchive: {
+      action: 'toggleArchive',
     },
   },
 } as Meta<BikeComponent>;

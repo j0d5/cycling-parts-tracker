@@ -55,7 +55,7 @@ describe('FeatureDashboardComponent', () => {
     const refreshSpy = jest
       .spyOn(apiService, 'getAllBikeItems')
       .mockReturnValue(of([{ ...bike, archived: true }]));
-    component.toggleComplete(bike);
+    component.toggleArchive(bike);
     expect(refreshSpy).toHaveBeenCalled();
     expect(updateSpy).toHaveBeenCalled();
     expect(component.bikeItems$.value.length).toBe(1);

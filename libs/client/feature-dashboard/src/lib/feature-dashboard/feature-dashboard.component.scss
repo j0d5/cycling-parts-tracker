@@ -1,41 +1,64 @@
-// container element for the (vertical) list
-.bike-list {
+:host {
+  // .content-container won't matter because of encapsulation unless this set
+  display: contents;
+}
+
+.page {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: incomplete complete;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  width: 1000px;
+  padding: 1rem;
+}
+
+.incomplete-column,
+.complete-column {
   display: flex;
   flex-direction: column;
-
-  // "owl" pattern used for spacing between list items
   > * + * {
     margin-block-start: 1em;
   }
+
+  h1 {
+    text-align: center;
+    border: 0;
+    // border-bottom: 1px solid #d8dee9;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
 }
 
-// block-level class name
+.incomplete-column {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.complete-column {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
 .bike {
   width: 30rem;
   padding: 8px;
-  box-shadow: 1px 1px 2px 0px;
+  box-shadow: 4px 4px 8px 0px;
   border: 1px solid #000000;
-  border-radius: 8px;
   font-family: Arial, Helvetica, sans-serif;
 
-  // element-level class name
-  &__manufacturer {
+  &-manufacturer {
     margin-block-start: 0;
   }
 
-  // element-level class name
-  &__id {
+  &-id {
     color: #a5a5a5;
   }
 
-  // element-level class name
-  &__archived-value {
-    // modifier-level class name
+  &-archived-value {
     &--false {
       color: red;
     }
-
-    // modifier-level class name
     &--true {
       color: green;
     }

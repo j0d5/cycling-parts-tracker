@@ -12,12 +12,14 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { Bike } from '@cpt/shared/domain';
+import { Bike, CreateBike } from '@cpt/shared/domain';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faCheck,
   faCircle,
+  faFloppyDisk,
   faPencil,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
@@ -25,10 +27,10 @@ import { EditableModule } from '@ngneat/edit-in-place';
 
 /**
  * Create a type for the FormGroup, using only the properties of
- * a to-do item that we want to be able to edit.
+ * a bike item that we want to be able to edit.
  */
 type BikeFormType = {
-  [k in keyof Pick<Bike, 'manufacturer' | 'model'>]: FormControl<string>;
+  [k in keyof Pick<Bike, 'manufacturer' | 'model' | 'date'>]: FormControl;
 };
 
 @Component({
@@ -42,6 +44,7 @@ type BikeFormType = {
     EditableModule,
   ],
   templateUrl: './bike.component.html',
+  styleUrls: ['./bike.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BikeComponent implements OnInit {
@@ -49,40 +52,49 @@ export class BikeComponent implements OnInit {
   faCircleOutline = faCircle;
   faPencil = faPencil;
   faTrashCan = faTrashCan;
+  faFloppyDisk = faFloppyDisk;
 
   bikeForm!: FormGroup<BikeFormType>;
 
   @Input() bike: Bike | undefined;
 
-  @Output() toggleComplete = new EventEmitter<Bike>();
+  @Output() toggleArchive = new EventEmitter<Bike>();
   @Output() updateBike = new EventEmitter<Bike>();
   @Output() deleteBike = new EventEmitter<Bike>();
+  @Output() createBike = new EventEmitter<CreateBike>();
 
   ngOnInit(): void {
-    if (this.bike) {
-      this.bikeForm = new FormGroup({
-        manufacturer: new FormControl(this.bike.manufacturer, {
-          nonNullable: true,
-        }),
-        model: new FormControl(this.bike.model, {
-          nonNullable: true,
-        }),
-      });
-    }
+    this.bikeForm = new FormGroup({
+      manufacturer: new FormControl(this.bike?.manufacturer || 'New Bike', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(1)],
+      }),
+      model: new FormControl(this.bike?.model || 'Model', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(1)],
+      }),
+      date: new FormControl(this.bike?.date || new Date(), {
+        nonNullable: true,
+      }),
+    });
   }
 
   saveEdit() {
-    this.triggerUpdate({
-      ...this.bike,
-      ...this.bikeForm.value,
-    });
+    if (this.bikeForm.valid && this.bikeForm.dirty) {
+      this.triggerUpdate({
+        ...this.bike,
+        ...this.bikeForm.value,
+      });
+    } else {
+      console.log(`Form invalid, not saving`);
+    }
   }
 
   cancelEdit() {
     this.bikeForm.reset();
   }
 
-  triggerToggleComplete() {
+  triggerToggleArchive() {
     this.triggerUpdate({
       ...this.bike,
       archived: !this.bike?.archived,
@@ -92,6 +104,8 @@ export class BikeComponent implements OnInit {
   triggerUpdate(bike: Partial<Bike>) {
     if (!this.bike) {
       return;
+    } else {
+      console.log(`No bike, not saving`);
     }
     this.updateBike.emit({
       ...this.bike,
@@ -101,5 +115,14 @@ export class BikeComponent implements OnInit {
 
   triggerDelete() {
     this.deleteBike.emit(this.bike);
+  }
+
+  triggerCreate() {
+    console.debug('triggerCreate');
+    if (this.bikeForm.valid && this.bikeForm.dirty) {
+      this.createBike.emit(this.bikeForm.getRawValue());
+    } else {
+      console.log(`Form invalid, not creating`, this.bikeForm);
+    }
   }
 }
