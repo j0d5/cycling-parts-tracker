@@ -41,7 +41,7 @@ export class ClientFeatureLoginComponent {
 
   errorMessage$ = new BehaviorSubject<string | null>(null);
 
-  // private readonly apiService = inject(ApiService);
+  // private readonly bikeService = inject(BikeService);
 
   get emailInvalidAndTouched(): boolean {
     return (

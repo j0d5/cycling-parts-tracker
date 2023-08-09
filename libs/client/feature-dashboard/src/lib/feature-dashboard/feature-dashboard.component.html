@@ -2,7 +2,7 @@
   <div class="content-area">
     <div class="page" *ngIf="bikeItems$ | async as bikeItems">
       <div class="incomplete-column">
-        <h1>Current</h1>
+        <h1>My Bikes</h1>
         <div class="bike add-bike" *ngIf="!addingBike">
           <div class="bike-body">
             <button class="btn btn--default" (click)="triggerEmptyBike()">

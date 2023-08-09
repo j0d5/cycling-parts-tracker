@@ -5,19 +5,19 @@ import { of } from 'rxjs';
 
 import { Bike } from '@cpt/shared/domain';
 import { createMockBike, createMockUser } from '@cpt/shared/util-testing';
-import { ApiService } from './api.service';
+import { BikeService } from './bike.service';
 
 const mockUser = createMockUser();
 
-describe('ApiService', () => {
-  let service: ApiService;
+describe('BikeService', () => {
+  let service: BikeService;
   let http: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(ApiService);
+    service = TestBed.inject(BikeService);
     http = TestBed.inject(HttpClient);
   });
 

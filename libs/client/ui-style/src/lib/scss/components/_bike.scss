@@ -43,19 +43,20 @@ $bike-border-radius: 8px;
   justify-content: center;
 
   .fa-circle {
-    color: $color-status-danger;
+    color: $color-status-success;
   }
 
   // use a modifier of the class to change the state of the element
   &--true {
     .fa-circle,
     .fa-check {
-      color: $color-status-success;
+      color: $color-status-danger;
     }
   }
 }
 
 .bike-actions {
+  display: flex;
   > * + * {
     margin-inline-start: $space-sm;
   }

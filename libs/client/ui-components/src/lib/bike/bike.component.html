@@ -79,8 +79,8 @@
       </button>
 
       <button
-        *ngIf="!bike"
         id="btn-save"
+        *ngIf="!bike"
         class="btn btn--secondary btn--sm"
         [class.btn--disabled]="bikeForm.invalid"
         (click)="triggerCreate()"
@@ -89,19 +89,19 @@
       </button>
 
       <button
-        id="btn-complete"
+        id="btn-archive"
+        *ngIf="bike"
         class="btn btn--sm bike-archived"
         [class.bike-archived--true]="bike.archived"
         [class.btn--disabled]="!bike"
         (click)="triggerToggleArchive()"
-        *ngIf="bike"
       >
         <fa-stack>
           <fa-icon [icon]="faCircleOutline" stackItemSize="2x"></fa-icon>
           <fa-icon
+            *ngIf="bike?.archived"
             [icon]="faCheck"
             stackItemSize="1x"
-            *ngIf="bike?.archived"
           ></fa-icon>
         </fa-stack>
       </button>

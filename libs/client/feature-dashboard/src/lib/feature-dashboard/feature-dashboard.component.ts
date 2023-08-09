@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { ApiService } from '@cpt/client/data-access';
+import { BikeService } from '@cpt/client/data-access';
 import { BikeComponent } from '@cpt/client/ui-components';
 import { Bike, CreateBike } from '@cpt/shared/domain';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -15,7 +15,7 @@ import { BehaviorSubject, take } from 'rxjs';
   styleUrls: ['./feature-dashboard.component.scss'],
 })
 export class FeatureDashboardComponent implements OnInit {
-  private readonly apiService = inject(ApiService);
+  private readonly bikeService = inject(BikeService);
   faPlusSquare = faPlusSquare;
 
   bikeItems$ = new BehaviorSubject<Bike[]>([]);
@@ -31,7 +31,7 @@ export class FeatureDashboardComponent implements OnInit {
   }
 
   refreshItems() {
-    this.apiService
+    this.bikeService
       .getAllBikeItems()
       .pipe(take(1))
       .subscribe((items) => this.bikeItems$.next(items));
@@ -42,7 +42,7 @@ export class FeatureDashboardComponent implements OnInit {
   }
 
   toggleArchive(bike: Bike) {
-    this.apiService
+    this.bikeService
       .updateBike(bike.id, { archived: !bike.archived })
       .pipe(take(1))
       .subscribe(() => {
@@ -51,7 +51,7 @@ export class FeatureDashboardComponent implements OnInit {
   }
 
   deleteBike({ id }: Bike) {
-    this.apiService
+    this.bikeService
       .deleteBike(id)
       .pipe(take(1))
       .subscribe(() => {
@@ -60,7 +60,7 @@ export class FeatureDashboardComponent implements OnInit {
   }
 
   editBike(bike: Bike) {
-    this.apiService
+    this.bikeService
       .updateBike(bike.id, bike)
       .pipe(take(1))
       .subscribe(() => {
@@ -69,7 +69,7 @@ export class FeatureDashboardComponent implements OnInit {
   }
 
   createBike(data: CreateBike) {
-    this.apiService
+    this.bikeService
       .createBike(data)
       .pipe(take(1))
       .subscribe(() => {
