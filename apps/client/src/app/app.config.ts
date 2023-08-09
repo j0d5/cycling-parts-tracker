@@ -1,16 +1,26 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
 
-import { jwtInterceptor } from '@cpt/client/data-access';
+import { AuthService, jwtInterceptor } from '@cpt/client/data-access';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     provideHttpClient(withInterceptors([jwtInterceptor])),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (auth: AuthService) => {
+        console.log(`[APP_INIT] Loading token from storage..`);
+        auth.loadToken();
+        return () => Promise.resolve();
+      },
+      deps: [AuthService],
+      multi: true,
+    },
   ],
 };

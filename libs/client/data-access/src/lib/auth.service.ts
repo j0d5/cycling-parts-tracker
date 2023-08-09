@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { TOKEN_STORAGE_KEY } from '@cpt/client/util';
 import {
@@ -8,7 +8,12 @@ import {
 } from '@cpt/shared/domain';
 import { environment } from '@cpt/shared/util-env';
 import * as jwt_decode from 'jwt-decode';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, share, take, tap } from 'rxjs';
+import { handleApiError } from './handle-api-error-response';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +29,7 @@ export class AuthService {
    * The encoded token is stored so that it can be used by an interceptor
    * and injected as a header
    */
-  accessToken$ = this.accessToken$$.pipe();
+  accessToken$ = this.accessToken$$.pipe(share());
 
   /**
    * Data from the decoded JWT including a user's ID and email address
@@ -42,22 +47,26 @@ export class AuthService {
   }
 
   loadToken() {
-    console.log(`JwtTokenService#loadToken`);
     const token = localStorage.getItem(TOKEN_STORAGE_KEY);
-    console.log(`JwtTokenService#loadToken - token: ${token}`);
+    console.log(`[AuthService] Loaded token: ${token?.slice(0, 12)}`);
     if (token) {
       this.accessToken$$.next(token);
+      this.userData$$.next(this.decodeToken(token));
     }
   }
 
   loginUser(data: LoginPayload): Observable<TokenResponse> {
+    console.log(`[AuthService] Logging in`, data);
     return this.http
-      .post<TokenResponse>(`${this.baseUrl}/auth/login`, data)
+      .post<TokenResponse>(`${this.baseUrl}/auth/login`, data, httpOptions)
       .pipe(
+        take(1),
         tap(({ access_token }) => {
           this.setToken(access_token);
           this.userData$$.next(this.decodeToken(access_token));
-        })
+        }),
+        share(),
+        handleApiError
       );
   }
 
