@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 import { createMockBike, createMockUser } from '@cpt/shared/util-testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditableModule } from '@ngneat/edit-in-place';
+
 import { BikeComponent } from './bike.component';
 
 const mockUser = createMockUser();

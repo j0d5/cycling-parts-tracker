@@ -103,9 +103,8 @@ export class BikeComponent implements OnInit {
 
   triggerUpdate(bike: Partial<Bike>) {
     if (!this.bike) {
-      return;
-    } else {
       console.log(`No bike, not saving`);
+      return;
     }
     this.updateBike.emit({
       ...this.bike,
@@ -118,7 +117,6 @@ export class BikeComponent implements OnInit {
   }
 
   triggerCreate() {
-    console.debug('triggerCreate');
     if (this.bikeForm.valid && this.bikeForm.dirty) {
       this.createBike.emit(this.bikeForm.getRawValue());
     } else {

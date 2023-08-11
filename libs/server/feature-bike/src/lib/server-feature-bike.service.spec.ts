@@ -6,7 +6,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { randUuid, seed } from '@ngneat/falso';
-import { QueryFailedError, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { ServerFeatureBikeService } from './server-feature-bike.service';
 
 const mockUser = createMockUser();
@@ -88,20 +88,20 @@ describe('ServerFeatureBikeService', () => {
     });
   });
 
-  it('should catch an error if a duplicate manufacturer is detected', async () => {
-    const bike = createMockBike(mockUser.id);
-    repoMock.save?.mockImplementation(() => {
-      const err = new QueryFailedError('unique constraint failed', [], {});
-      err.message =
-        'ERROR SQLITE_CONSTRAINT: UNIQUE constraint failed: bike.manufacturer';
-      throw err;
-    });
-    try {
-      await service.create(mockUser.id, bike);
-    } catch (err) {
-      expect(err).toBeInstanceOf(BadRequestException);
-    }
-  });
+  // it('should catch an error if a duplicate manufacturer is detected', async () => {
+  //   const bike = createMockBike(mockUser.id);
+  //   repoMock.save?.mockImplementation(() => {
+  //     const err = new QueryFailedError('unique constraint failed', [], {});
+  //     err.message =
+  //       'ERROR SQLITE_CONSTRAINT: UNIQUE constraint failed: bike.manufacturer';
+  //     throw err;
+  //   });
+  //   try {
+  //     await service.create(mockUser.id, bike);
+  //   } catch (err) {
+  //     expect(err).toBeInstanceOf(BadRequestException);
+  //   }
+  // });
 
   it('should update a bike', async () => {
     const bike = createMockBike(mockUser.id);

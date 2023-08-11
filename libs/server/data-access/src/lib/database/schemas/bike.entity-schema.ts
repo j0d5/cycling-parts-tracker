@@ -31,20 +31,18 @@ export const BikeEntitySchema = new EntitySchema<Bike>({
     user: {
       type: 'many-to-one',
       target: 'user',
-      // column name in this table where the foreign key
-      // of the associated table is referenced
+      // column name in this table where the foreign key of the associated table is referenced
       joinColumn: {
         name: 'user_id',
       },
       inverseSide: 'bikes',
     },
   },
-  // adds a constraint to the table that ensures each
-  // userID + title combination is unique
-  uniques: [
-    {
-      name: 'UNIQUE_MANUFACTURER_USER',
-      columns: ['manufacturer', 'user.id'],
-    },
-  ],
+  // adds a constraint to the table that ensures each userID + title combination is unique
+  // uniques: [
+  //   {
+  //     name: 'UNIQUE_MANUFACTURER_USER',
+  //     columns: ['manufacturer', 'user.id'],
+  //   },
+  // ],
 });

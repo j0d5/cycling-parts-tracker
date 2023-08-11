@@ -44,32 +44,29 @@ export class ServerFeatureBikeService {
     userId: string,
     bike: Pick<Bike, 'manufacturer' | 'model' | 'date'>
   ): Promise<Bike> {
-    const existing = await this.bikeRepository.findOneBy({
-      manufacturer: bike.manufacturer,
-      model: bike.model,
-      user: { id: userId },
-    });
+    // const existing = await this.bikeRepository.findOneBy({
+    //   manufacturer: bike.manufacturer,
+    //   model: bike.model,
+    //   user: { id: userId },
+    // });
 
-    this.logger.debug(`Creating new bike, exists already: ${!!existing}`);
+    // this.logger.debug(`Creating new bike, exists already: ${!!existing}`);
 
-    if (existing) {
-      throw new BadRequestException(
-        `Bike with title '${bike.manufacturer}' already exists!`
-      );
-    }
-    this.logger.debug(
-      `Saving new bike\n${JSON.stringify(
-        { ...bike, user_id: userId },
-        null,
-        2
-      )}`
-    );
+    // if (existing) {
+    //   throw new BadRequestException(
+    //     `Bike with manufacturer '${bike.manufacturer}' already exists!`
+    //   );
+    // }
+
     const newBike = await this.bikeRepository.save({
       ...bike,
       user: {
         id: userId,
       },
     });
+
+    this.logger.debug(`Saving new bike`, newBike);
+
     const saved = await this.bikeRepository.findOneByOrFail({
       id: newBike.id,
       user: {
