@@ -5,6 +5,7 @@
         class="form-control h4"
         id="input-form-control-empty"
         formControlName="manufacturer"
+        placeholder="Manufacturer"
       />
     </ng-container>
 
@@ -36,11 +37,18 @@
 
   <div class="bike-body">
     <ng-container *ngIf="!bike; else notEmptyDesc">
-      <textarea
-        id="textarea-form-control-empty"
+      <input
+        id="input-form-control-empty"
         class="form-control"
         formControlName="model"
-      ></textarea>
+        placeholder="Model"
+      />
+      <input
+        id="input-form-control-empty"
+        class="form-control"
+        formControlName="date"
+        placeholder="Date"
+      />
     </ng-container>
 
     <ng-template #notEmptyDesc>
@@ -52,16 +60,24 @@
       >
         <ng-template viewMode>
           <p class="bike-model truncate">{{ bike?.model }}</p>
+          <p class="bike-date truncate">{{ bike?.date }}</p>
         </ng-template>
 
         <ng-template editMode>
-          <textarea
-            id="textarea-form-control-populated"
+          <input
+            id="input-form-control-populated"
             editableOnEnter
             editableOnEscape
             class="form-control"
             formControlName="model"
-          ></textarea>
+          />
+          <input
+            id="input-form-control-populated"
+            editableOnEnter
+            editableOnEscape
+            class="form-control"
+            formControlName="date"
+          />
         </ng-template>
       </editable>
     </ng-template>

@@ -65,17 +65,20 @@ export class BikeComponent implements OnInit {
 
   ngOnInit(): void {
     this.bikeForm = new FormGroup({
-      manufacturer: new FormControl(this.bike?.manufacturer || 'New Bike', {
+      manufacturer: new FormControl(this.bike?.manufacturer, {
         nonNullable: true,
         validators: [Validators.required, Validators.minLength(1)],
       }),
-      model: new FormControl(this.bike?.model || 'Model', {
+      model: new FormControl(this.bike?.model, {
         nonNullable: true,
         validators: [Validators.required, Validators.minLength(1)],
       }),
-      date: new FormControl(this.bike?.date || new Date(), {
-        nonNullable: true,
-      }),
+      date: new FormControl(
+        this.bike?.date || new Date().toLocaleDateString('de-DE'),
+        {
+          nonNullable: true,
+        }
+      ),
     });
   }
 
@@ -84,6 +87,7 @@ export class BikeComponent implements OnInit {
       this.triggerUpdate({
         ...this.bike,
         ...this.bikeForm.value,
+        date: new Date(this.bikeForm.value.date),
       });
     } else {
       console.log(`Form invalid, not saving`);
