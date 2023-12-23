@@ -1,4 +1,43 @@
 # Add files here to ignore them from prettier formatting
 /dist
 /coverage
+
+
+# Note: Version control folders (.git) and node_modules are ignored by default.
+
+.gitignore
+.editorconfig
 .angular
+.prettierignore
+.lintstagedrc
+.nvmrc
+.idea
+.husky
+.yarnrc
+yarn.lock
+coverage
+helm-chart
+docker_dist
+Jenkinsfile
+Dockerfile
+dist
+favicon.ico
+*.sh
+*.pdf
+*.plantuml
+*.xlsx
+*.zip
+
+# Generated file by Storybook
+documentation.json
+
+# SVG files
+*.svg
+
+# woff text files
+*.woff
+*.woff2
+
+# images
+*.png
+*.jpg

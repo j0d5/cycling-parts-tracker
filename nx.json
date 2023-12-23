@@ -78,5 +78,9 @@
       "style": "scss"
     }
   },
-  "$schema": "./node_modules/nx/schemas/nx-schema.json"
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "nxCloudAccessToken": "OGUwNWE5YmQtYzliOC00NzBlLTlkZTYtZjE0ZWM2NjYxZWJmfHJlYWQtd3JpdGU="
 }
