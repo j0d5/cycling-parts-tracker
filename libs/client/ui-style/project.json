@@ -6,24 +6,29 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/client/ui-style",
         "main": "libs/client/ui-style/src/index.ts",
         "tsConfig": "libs/client/ui-style/tsconfig.lib.json",
-        "assets": ["libs/client/ui-style/*.md"]
+        "assets": [
+          "libs/client/ui-style/*.md"
+        ]
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/client/ui-style/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "stylelint": {
       "executor": "nx-stylelint:lint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "libs/client/ui-style/**/*.css",
@@ -32,5 +37,8 @@
       }
     }
   },
-  "tags": ["type:ui", "scope:client"]
+  "tags": [
+    "type:ui",
+    "scope:client"
+  ]
 }

@@ -5,12 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/client/util/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
     }
   },
-  "tags": ["type:util", "scope:client"]
+  "tags": [
+    "type:util",
+    "scope:client"
+  ]
 }

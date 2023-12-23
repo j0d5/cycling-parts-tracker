@@ -10,34 +10,70 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@cpt/client/data-access": ["libs/client/data-access/src/index.ts"],
+      "@cpt/client/data-access": [
+        "libs/client/data-access/src/index.ts"
+      ],
       "@cpt/client/feature-dashboard": [
         "libs/client/feature-dashboard/src/index.ts"
       ],
-      "@cpt/client/feature-login": ["libs/client/feature-login/src/index.ts"],
+      "@cpt/client/feature-login": [
+        "libs/client/feature-login/src/index.ts"
+      ],
       "@cpt/client/feature-register": [
         "libs/client/feature-register/src/index.ts"
       ],
-      "@cpt/client/ui-components": ["libs/client/ui-components/src/index.ts"],
-      "@cpt/client/ui-style": ["libs/client/ui-style/src/index.ts"],
-      "@cpt/client/util": ["libs/client/util/src/index.ts"],
-      "@cpt/server/data-access": ["libs/server/data-access/src/index.ts"],
-      "@cpt/server/feature-auth": ["libs/server/feature-auth/src/index.ts"],
-      "@cpt/server/feature-bike": ["libs/server/feature-bike/src/index.ts"],
-      "@cpt/server/feature-health": ["libs/server/feature-health/src/index.ts"],
-      "@cpt/server/feature-user": ["libs/server/feature-user/src/index.ts"],
-      "@cpt/server/util": ["libs/server/util/src/index.ts"],
-      "@cpt/server/util/testing": ["libs/server/util/src/lib/testing/index.ts"],
-      "@cpt/shared/domain": ["libs/shared/domain/src/index.ts"],
-      "@cpt/shared/util-env": ["libs/shared/util-env/src/index.ts"],
-      "@cpt/shared/util-testing": ["libs/shared/util-testing/src/index.ts"]
+      "@cpt/client/ui-components": [
+        "libs/client/ui-components/src/index.ts"
+      ],
+      "@cpt/client/ui-style": [
+        "libs/client/ui-style/src/index.ts"
+      ],
+      "@cpt/client/util": [
+        "libs/client/util/src/index.ts"
+      ],
+      "@cpt/server/data-access": [
+        "libs/server/data-access/src/index.ts"
+      ],
+      "@cpt/server/feature-auth": [
+        "libs/server/feature-auth/src/index.ts"
+      ],
+      "@cpt/server/feature-bike": [
+        "libs/server/feature-bike/src/index.ts"
+      ],
+      "@cpt/server/feature-health": [
+        "libs/server/feature-health/src/index.ts"
+      ],
+      "@cpt/server/feature-user": [
+        "libs/server/feature-user/src/index.ts"
+      ],
+      "@cpt/server/util": [
+        "libs/server/util/src/index.ts"
+      ],
+      "@cpt/server/util/testing": [
+        "libs/server/util/src/lib/testing/index.ts"
+      ],
+      "@cpt/shared/domain": [
+        "libs/shared/domain/src/index.ts"
+      ],
+      "@cpt/shared/util-env": [
+        "libs/shared/util-env/src/index.ts"
+      ],
+      "@cpt/shared/util-testing": [
+        "libs/shared/util-testing/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
